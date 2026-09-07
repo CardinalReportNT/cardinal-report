@@ -70,5 +70,23 @@
       "location": "Home",
       "time": "10:20 AM"
     }
+  ],  "roster": [
+    {"number": "1", "name": "Lincon Toutkalty", "positions": "3B / SS"},
+    {"number": "2", "name": "Parker Arras", "positions": "2B / LF"},
+    {"number": "4", "name": "Ryleigh Mullins", "positions": "C / 2B"},
+    {"number": "5", "name": "Arnold Rydzynski", "positions": "SS / 2B / 1B"},
+    {"number": "6", "name": "Mikey Marino", "positions": "RF"},
+    {"number": "7", "name": "Anthony Gonzalas", "positions": "C / P"},
+    {"number": "8", "name": "Elijah Leight", "positions": "LF / RF"},
+    {"number": "9", "name": "Jaxon Maynard", "positions": "P / 1B / 3B"},
+    {"number": "10", "name": "Logan Brent", "positions": "1B / C"},
+    {"number": "11", "name": "Adian Scott", "positions": "CF"},
+    {"number": "11", "name": "Ryker Topkino", "positions": "SS / P"},
+    {"number": "12", "name": "Zeke Dankert", "positions": "LF / 2B"},
+    {"number": "13", "name": "Preston Michaletz", "positions": "P / 1B"},
+    {"number": "14", "name": "Clark Cich", "positions": "3B / C"},
+    {"number": "15", "name": "Mason Dorazio", "positions": "RF"},
+    {"number": "", "name": "Joel Dorazio", "positions": "RF"},
+    {"number": "", "name": "Nicholas Misoi", "positions": "LF / 2B"}
   ]
 }

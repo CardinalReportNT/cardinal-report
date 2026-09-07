@@ -9,5 +9,66 @@
     "date": "Thursday, September 10",
     "time": "5:30 PM",
     "venue": "North Tonawanda National"
-  }
+  },  "schedule": [
+    {
+      "date": "August 25",
+      "opponent": "Mets",
+      "location": "Away",
+      "result": "L 4-5"
+    },
+    {
+      "date": "August 29",
+      "opponent": "NTNLL Brewers Goodband",
+      "location": "Home",
+      "result": "L 1-20"
+    },
+    {
+      "date": "September 1",
+      "opponent": "Rockies",
+      "location": "Home",
+      "result": "L 1-24"
+    },
+    {
+      "date": "September 5",
+      "opponent": "Laboeuf Dodgers",
+      "location": "Away",
+      "result": "L 6-10"
+    },
+    {
+      "date": "September 10",
+      "opponent": "NTNLL Pirates",
+      "location": "Away",
+      "time": "5:30 PM"
+    },
+    {
+      "date": "September 12",
+      "opponent": "Diamondbacks NTNLL",
+      "location": "Home",
+      "time": "12:40 PM"
+    },
+    {
+      "date": "September 19",
+      "opponent": "Mets NTNLL",
+      "location": "Home",
+      "time": "8:00 AM"
+    },
+    {
+      "date": "September 26",
+      "opponent": "NTNLL Pirates",
+      "location": "Home",
+      "time": "8:00 AM"
+    },
+    {
+      "date": "September 28",
+      "opponent": "NTNLL Brewers Goodband",
+      "location": "Home",
+      "time": "5:30 PM"
+    },
+    {
+      "date": "October 3",
+      "opponent": "Rockies",
+      "location": "Home",
+      "time": "10:20 AM"
+    }
+  ]
 }

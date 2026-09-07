@@ -114,5 +114,16 @@
     {"name":"Preston Michaletz","ip":"4.0","era":"18.00","so":9,"runs":8},
     {"name":"Jaxon Maynard","ip":"5.0","era":"18.20","so":7,"runs":16},
     {"name":"Ryker Topkino","ip":"5.2","era":"27.18","so":11,"runs":23}
+  ],  "weeklyNews": [
+    {
+      "title": "Cardinals Prepare for Pirates",
+      "date": "September 7, 2026",
+      "summary": "North Tonawanda gets ready for Thursday's matchup against the NTNLL Pirates. The Cardinals enter the game 0-4 and will look to build off their six-run performance against the Dodgers."
+    },
+    {
+      "title": "Michaletz Set to Return",
+      "date": "September 7, 2026",
+      "summary": "Preston Michaletz is expected back in the lineup Thursday, playing first base and hitting. He is not currently listed to pitch."
+    }
   ]
 }

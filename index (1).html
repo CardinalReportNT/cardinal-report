@@ -1,0 +1,1809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The Cardinal Report — game days, scores, schedule, roster and team news." />
+  <title>The Cardinal Report</title>
+  <style>
+    :root{
+      --red:#c8102e;
+      --dark:#121212;
+      --dark2:#1d1d1f;
+      --cream:#f4f0e8;
+      --white:#ffffff;
+      --muted:#bdbdbd;
+      --line:#333;
+      --gold:#f4c542;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:#0e0e0f;
+      color:var(--white);
+      line-height:1.5;
+    }
+
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+
+    .topbar{
+      background:var(--red);
+      color:#fff;
+      font-size:.85rem;
+      font-weight:800;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      padding:9px 5%;
+      text-align:center;
+    }
+
+    header{
+      position:sticky;
+      top:0;
+      z-index:20;
+      background:rgba(14,14,15,.96);
+      border-bottom:1px solid #292929;
+      backdrop-filter:blur(8px);
+    }
+
+    .nav{
+      max-width:1180px;
+      margin:auto;
+      min-height:76px;
+      padding:0 22px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:22px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:900;
+      letter-spacing:.04em;
+    }
+
+    .logo{
+      width:46px;
+      height:46px;
+      border-radius:50%;
+      background:var(--red);
+      border:3px solid white;
+      display:grid;
+      place-items:center;
+      font-family:Georgia, serif;
+      font-size:1.6rem;
+      font-weight:900;
+      box-shadow:0 0 0 3px var(--red);
+    }
+
+    .brand-text span{
+      display:block;
+      font-size:.72rem;
+      color:#aaa;
+      letter-spacing:.19em;
+    }
+
+    nav ul{
+      display:flex;
+      list-style:none;
+      margin:0;
+      padding:0;
+      gap:24px;
+      font-size:.9rem;
+      font-weight:800;
+      text-transform:uppercase;
+    }
+
+    nav a:hover{color:#ff4966}
+
+    .hero{
+      min-height:650px;
+      display:flex;
+      align-items:flex-end;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.88) 0%, rgba(0,0,0,.58) 50%, rgba(0,0,0,.12) 100%),
+        radial-gradient(circle at 75% 35%, rgba(200,16,46,.42), transparent 40%),
+        linear-gradient(135deg,#151515,#2a2a2b);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero:after{
+      content:"CR";
+      position:absolute;
+      right:-10px;
+      top:45px;
+      font-family:Georgia, serif;
+      font-size:26vw;
+      font-weight:900;
+      color:rgba(255,255,255,.025);
+      line-height:1;
+      transform:rotate(-6deg);
+      pointer-events:none;
+    }
+
+    .hero-inner{
+      width:100%;
+      max-width:1180px;
+      margin:auto;
+      padding:90px 22px 72px;
+      position:relative;
+      z-index:2;
+    }
+
+    .eyebrow{
+      display:inline-block;
+      background:var(--red);
+      color:#fff;
+      padding:7px 11px;
+      border-radius:3px;
+      font-size:.77rem;
+      font-weight:900;
+      letter-spacing:.13em;
+      text-transform:uppercase;
+      margin-bottom:18px;
+    }
+
+    h1{
+      margin:0;
+      max-width:780px;
+      font-size:clamp(3rem,8vw,7rem);
+      line-height:.88;
+      letter-spacing:-.045em;
+      text-transform:uppercase;
+      font-weight:1000;
+    }
+
+    .hero p{
+      color:#d7d7d7;
+      max-width:680px;
+      font-size:1.08rem;
+      margin:24px 0 26px;
+    }
+
+    .btns{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{
+      display:inline-block;
+      padding:13px 19px;
+      border-radius:4px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.05em;
+      font-size:.86rem;
+    }
+
+    .btn-red{background:var(--red)}
+    .btn-outline{border:1px solid #666;background:rgba(0,0,0,.28)}
+    .btn:hover{transform:translateY(-1px);filter:brightness(1.08)}
+
+    .score-strip{
+      background:#18181a;
+      border-top:1px solid #2d2d2f;
+      border-bottom:1px solid #2d2d2f;
+    }
+
+    .score-wrap{
+      max-width:1180px;
+      margin:auto;
+      padding:18px 22px;
+      display:grid;
+      grid-template-columns:1fr auto 1fr;
+      gap:20px;
+      align-items:center;
+    }
+
+    .team{
+      font-weight:900;
+      font-size:1.1rem;
+      text-transform:uppercase;
+    }
+
+    .team.away{text-align:right}
+    .score{
+      font-size:2rem;
+      font-weight:1000;
+      color:var(--gold);
+    }
+
+    main{max-width:1180px;margin:auto;padding:58px 22px 90px}
+
+    section{margin-bottom:70px}
+
+    .section-head{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:20px;
+      margin-bottom:24px;
+    }
+
+    .section-head h2{
+      margin:0;
+      font-size:2rem;
+      text-transform:uppercase;
+      letter-spacing:-.02em;
+    }
+
+    .section-head p{
+      margin:0;
+      color:#9d9d9d;
+      font-size:.9rem;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+    }
+
+    .card{
+      background:#18181a;
+      border:1px solid #2b2b2e;
+      border-radius:8px;
+      overflow:hidden;
+    }
+
+    .card-img{
+      min-height:220px;
+      background:
+        linear-gradient(0deg, rgba(0,0,0,.65), rgba(0,0,0,.05)),
+        linear-gradient(135deg,#3b0c14,#a60d28 55%,#21060a);
+      display:flex;
+      align-items:flex-end;
+      padding:18px;
+      position:relative;
+    }
+
+    .card-img small{
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.09em;
+      background:#000a;
+      padding:6px 8px;
+      border-radius:3px;
+    }
+
+    .card-body{padding:18px}
+    .card-body h3{margin:0 0 8px;font-size:1.22rem}
+    .card-body p{margin:0;color:#bcbcbc;font-size:.94rem}
+
+    .schedule{
+      border:1px solid #2b2b2e;
+      border-radius:8px;
+      overflow:hidden;
+    }
+
+    .game-row{
+      display:grid;
+      grid-template-columns:120px 1fr auto;
+      gap:20px;
+      align-items:center;
+      padding:18px 20px;
+      background:#171719;
+      border-bottom:1px solid #2c2c2e;
+    }
+
+    .game-row:last-child{border-bottom:none}
+    .date{
+      color:#bdbdbd;
+      font-weight:800;
+      text-transform:uppercase;
+      font-size:.84rem;
+    }
+
+    .matchup strong{
+      display:block;
+      font-size:1.03rem;
+      text-transform:uppercase;
+    }
+
+    .matchup span{color:#999;font-size:.87rem}
+    .status{
+      background:#2a2a2d;
+      padding:7px 10px;
+      border-radius:3px;
+      font-size:.78rem;
+      font-weight:900;
+      text-transform:uppercase;
+      white-space:nowrap;
+    }
+
+    .status.live{background:var(--red)}
+    .status.win{background:#1f6d3b}
+    .status.loss{background:#6d2929}
+
+    .roster{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:14px;
+    }
+
+    .player{
+      padding:18px;
+      background:#18181a;
+      border:1px solid #2b2b2e;
+      border-top:4px solid var(--red);
+      border-radius:6px;
+    }
+
+    .player .number{
+      font-size:2rem;
+      font-weight:1000;
+      color:#5b5b5f;
+      float:right;
+      line-height:1;
+    }
+
+    .player h3{margin:0 0 4px}
+    .player p{margin:0;color:#9c9c9c;font-size:.9rem}
+
+    .spotlight{
+      background:
+        linear-gradient(90deg,rgba(0,0,0,.88),rgba(0,0,0,.4)),
+        linear-gradient(135deg,#202023,#5b0a18);
+      border:1px solid #333;
+      border-radius:10px;
+      padding:42px;
+      min-height:320px;
+      display:flex;
+      align-items:center;
+    }
+
+    .spotlight-inner{max-width:650px}
+    .spotlight h2{font-size:2.7rem;margin:0 0 12px;text-transform:uppercase}
+    .spotlight p{color:#d1d1d1}
+    .stat-line{display:flex;gap:28px;flex-wrap:wrap;margin-top:24px}
+    .stat b{display:block;font-size:1.6rem}
+    .stat span{color:#aaa;font-size:.75rem;text-transform:uppercase;letter-spacing:.08em}
+
+
+    .stats-wrap{overflow-x:auto;border:1px solid #2b2b2e;border-radius:8px;background:#18181a}
+    .stats-table{width:100%;border-collapse:collapse;min-width:1450px;font-size:.82rem}
+    .stats-table th{background:#c8102e;color:white;text-transform:uppercase;letter-spacing:.04em;padding:11px 9px;position:sticky;top:76px;z-index:2}
+    .stats-table td{padding:11px 9px;border-bottom:1px solid #303034;text-align:center;white-space:nowrap}
+    .stats-table td:first-child,.stats-table th:first-child{text-align:left;position:sticky;left:0;background:#18181a;z-index:1}
+    .stats-table th:first-child{background:#c8102e;z-index:3}
+    .stats-table tr:hover td{background:#222225}
+    .stats-note{color:#999;font-size:.84rem;margin-top:12px}
+
+
+    .player{cursor:pointer;transition:transform .15s ease,border-color .15s ease}
+    .player:hover{transform:translateY(-3px);border-color:#666}
+    .player .view-profile{display:block;margin-top:10px;color:#ff4966;font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.07em}
+    .profile-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:100;padding:24px;overflow:auto}
+    .profile-modal.open{display:flex;align-items:center;justify-content:center}
+    .profile-panel{width:min(760px,100%);background:#171719;border:1px solid #3a3a3d;border-radius:12px;overflow:hidden;box-shadow:0 25px 80px rgba(0,0,0,.55)}
+    .profile-head{background:linear-gradient(135deg,#c8102e,#650817);padding:28px;display:flex;justify-content:space-between;gap:20px;align-items:start}
+    .profile-head h2{margin:0;font-size:2rem;text-transform:uppercase}
+    .profile-head p{margin:5px 0 0;color:#f2d9dd;font-weight:800}
+    .profile-close{border:0;background:#0008;color:white;width:38px;height:38px;border-radius:50%;font-size:1.4rem;cursor:pointer}
+    .profile-body{padding:26px}
+    .profile-group{margin-bottom:24px}
+    .profile-group:last-child{margin-bottom:0}
+    .profile-group h3{margin:0 0 12px;text-transform:uppercase;font-size:.9rem;color:#aaa;letter-spacing:.1em}
+    .profile-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+    .profile-stat{background:#222225;border:1px solid #303034;border-radius:6px;padding:14px;text-align:center}
+    .profile-stat b{display:block;font-size:1.25rem}
+    .profile-stat span{display:block;color:#999;font-size:.68rem;text-transform:uppercase;margin-top:3px}
+    @media(max-width:600px){.profile-stats{grid-template-columns:repeat(2,1fr)}.profile-head h2{font-size:1.5rem}}
+
+
+    .insider-stack{display:grid;gap:18px}
+    .insider-wide{grid-column:1/-1}
+    .breaking-banner{
+      background:linear-gradient(90deg,#c8102e,#6f0719);
+      border:1px solid #ff4a69;
+      border-radius:8px;
+      padding:18px 20px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.05em;
+    }
+    .mini-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    .mini-card{background:#202023;border:1px solid #303034;border-radius:7px;padding:15px}
+    .mini-card h4{margin:0 0 6px;font-size:1rem}
+    .mini-card p{margin:0;color:#aaa;font-size:.9rem}
+    .tag{
+      display:inline-block;
+      padding:4px 8px;
+      border-radius:999px;
+      background:#2c2c31;
+      color:#ddd;
+      font-size:.68rem;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      margin-bottom:8px;
+    }
+    .tag.red{background:#c8102e}
+    .tag.green{background:#1f6d3b}
+    .tag.gold{background:#6f5710}
+    .rank-table{width:100%;border-collapse:collapse}
+    .rank-table td{padding:10px 8px;border-bottom:1px solid #303034}
+    .rank-table td:last-child{text-align:right;font-weight:900}
+    .up{color:#54c27a}.down{color:#ff7070}.flat{color:#aaa}
+    @media(max-width:850px){.mini-grid{grid-template-columns:1fr}}
+
+
+    .breaking-banner .breaking-kicker{font-size:.78rem;letter-spacing:.14em;margin-bottom:8px}
+    .breaking-banner h3{font-size:clamp(1.35rem,3vw,2rem);margin:0 0 12px;letter-spacing:-.01em;text-transform:none}
+    .breaking-banner p{margin:0 0 12px;text-transform:none;letter-spacing:0;line-height:1.55;font-weight:600}
+    .breaking-status{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+    .breaking-status span{background:#0008;border:1px solid #ffffff45;padding:7px 10px;border-radius:4px;font-size:.75rem;letter-spacing:.06em}
+
+
+    .availability-legend{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 20px}
+    .availability-pill{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border-radius:999px;font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.06em;border:1px solid #ffffff26}
+    .availability-dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+    .status-green{background:#173d26}.status-green .availability-dot{background:#39d16f}
+    .status-yellow{background:#4a3d12}.status-yellow .availability-dot{background:#f4c542}
+    .status-red{background:#4b171d}.status-red .availability-dot{background:#ff4b5f}
+    .profile-availability{margin-bottom:24px;background:#202023;border:1px solid #333;border-radius:8px;padding:16px}
+    .profile-availability h3{margin:0 0 10px;text-transform:uppercase;font-size:.82rem;color:#aaa;letter-spacing:.09em}
+    .profile-availability p{margin:10px 0 0;color:#bbb;font-size:.88rem}
+
+
+    .roster-status{margin-top:9px}
+    .roster-status .availability-pill{font-size:.62rem;padding:5px 8px}
+
+
+    .hub-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .hub-card{background:#202023;border:1px solid #303034;border-radius:8px;padding:16px}
+    .hub-card .big{font-size:1.7rem;font-weight:1000;color:var(--gold);margin-top:4px}
+    .hub-card small{color:#8e8e93;text-transform:uppercase;font-weight:900;letter-spacing:.08em}
+    .leader-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0}
+    .leader-chip{background:#171719;border:1px solid #303034;border-radius:7px;padding:14px}
+    .leader-chip strong{display:block;margin-top:5px}
+    .countdown-box{background:linear-gradient(135deg,#711024,#19191c);border:1px solid #a92a44;border-radius:10px;padding:24px;text-align:center}
+    .countdown{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:18px}
+    .count-unit{min-width:78px;background:#0008;border:1px solid #ffffff20;border-radius:8px;padding:12px}
+    .count-unit b{display:block;font-size:1.6rem}
+    .status-center{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .status-row{display:flex;justify-content:space-between;gap:10px;align-items:center;background:#202023;border:1px solid #303034;border-radius:7px;padding:11px 12px}
+    .status-row strong{font-size:.88rem}
+    .timeline{border-left:3px solid #c8102e;margin-left:7px;padding-left:20px;display:grid;gap:18px}
+    .timeline-item{position:relative}
+    .timeline-item:before{content:"";position:absolute;width:11px;height:11px;border-radius:50%;background:#c8102e;left:-27px;top:5px}
+    .timeline-item time{color:#aaa;font-size:.78rem;font-weight:900;text-transform:uppercase}
+    .archive-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .archive-item{background:#202023;border:1px solid #303034;border-radius:7px;padding:15px}
+    .archive-item span{font-size:.7rem;color:#e3b64c;text-transform:uppercase;font-weight:900;letter-spacing:.08em}
+    .game-center-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .game-center-card{background:#202023;border:1px solid #303034;border-radius:8px;padding:16px;scroll-margin-top:90px}
+    .game-center-card h3{margin:6px 0}
+    .game-center-card .gc-score{font-size:1.35rem;font-weight:1000;color:var(--gold)}
+    .game-row{cursor:pointer}
+    .game-row:hover{background:#242428}
+    .chart-card{background:#202023;border:1px solid #303034;border-radius:8px;padding:18px}
+    .bar-row{display:grid;grid-template-columns:70px 1fr 40px;gap:10px;align-items:center;margin:12px 0}
+    .bar-track{height:12px;background:#111;border-radius:999px;overflow:hidden}
+    .bar-fill{height:100%;background:#c8102e;border-radius:999px}
+    .bar-fill.allowed{background:#777}
+    .transaction{display:grid;grid-template-columns:130px 1fr;gap:14px;padding:13px 0;border-bottom:1px solid #303034}
+    .transaction time{color:#aaa;font-size:.8rem;font-weight:900}
+    .award-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .award{background:#202023;border:1px solid #303034;border-radius:8px;padding:16px}
+    .award .trophy{font-size:1.5rem}
+    .matchup-box{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:center;background:#202023;border:1px solid #303034;border-radius:8px;padding:22px;text-align:center}
+    .matchup-box .versus{font-size:1.5rem;font-weight:1000;color:var(--gold)}
+    @media(max-width:850px){
+      .hub-grid,.leader-strip,.status-center,.award-grid{grid-template-columns:repeat(2,1fr)}
+      .archive-grid,.game-center-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:560px){
+      .hub-grid,.leader-strip,.status-center,.award-grid{grid-template-columns:1fr}
+      .matchup-box{grid-template-columns:1fr}
+    }
+
+
+    .gameday-hero{background:linear-gradient(135deg,#8f1028,#1a1a1d);border:1px solid #b92b47;border-radius:12px;padding:24px;margin:24px 0}
+    .gameday-hero .gd-top{display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}
+    .gameday-badge{display:inline-block;background:#c8102e;color:#fff;padding:7px 11px;border-radius:999px;font-size:.72rem;font-weight:1000;letter-spacing:.08em;text-transform:uppercase}
+    .lineup-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .lineup-row{display:grid;grid-template-columns:34px 1fr 70px;gap:10px;align-items:center;background:#202023;border:1px solid #303034;border-radius:7px;padding:10px 12px}
+    .trend-up{color:#58d27d}.trend-down{color:#ff6969}.trend-flat{color:#aaa}
+    .top5{display:grid;gap:10px}
+    .top5-row{display:grid;grid-template-columns:38px 1fr auto;gap:12px;align-items:center;background:#202023;border:1px solid #303034;border-radius:7px;padding:12px}
+    .top5-rank{font-size:1.2rem;font-weight:1000;color:var(--gold)}
+    .feature-story{background:linear-gradient(135deg,#26262a,#151517);border:1px solid #35353a;border-radius:10px;padding:22px}
+    .feature-story h3{font-size:clamp(1.35rem,3vw,2rem);margin:8px 0 10px}
+.quote-card{background:#202023;border-left:4px solid #c8102e;border-radius:6px;padding:16px 18px}
+    .record-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .record-card{background:#202023;border:1px solid #303034;border-radius:8px;padding:16px}
+    .record-card .record-value{font-size:1.5rem;font-weight:1000;color:var(--gold);margin:5px 0}
+    .race-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .race-card{background:#202023;border:1px solid #303034;border-radius:8px;padding:16px}
+    .share-row{display:flex;gap:10px;flex-wrap:wrap}
+    .share-btn{border:1px solid #444;background:#202023;color:#fff;padding:10px 13px;border-radius:7px;font-weight:900;cursor:pointer}
+    .share-btn:hover{background:#2a2a2f}
+    .last-updated{font-size:.8rem;color:#aaa}
+    .identity-bar{display:grid;grid-template-columns:1.3fr repeat(3,1fr);gap:10px;align-items:stretch;margin:18px 0}
+    .identity-card{background:#171719;border:1px solid #303034;border-radius:8px;padding:14px}
+    .identity-card small{display:block;color:#8f8f95;text-transform:uppercase;font-weight:900;letter-spacing:.08em}
+    .identity-card strong{display:block;margin-top:5px}
+    .about-card{background:#202023;border:1px solid #303034;border-radius:8px;padding:18px}
+    .game-log{width:100%;border-collapse:collapse;margin-top:12px}
+    .game-log th,.game-log td{padding:8px 10px;border-bottom:1px solid #303034;text-align:left;font-size:.82rem}
+    .game-log th{color:#aaa;text-transform:uppercase;font-size:.7rem}
+    .data-system-note{background:#161619;border:1px solid #2e2e33;border-radius:8px;padding:14px;color:#aaa}
+    @media(max-width:850px){
+      .gallery-grid,.record-grid,.race-grid,.identity-bar{grid-template-columns:repeat(2,1fr)}
+      .lineup-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:560px){
+      .gallery-grid,.record-grid,.race-grid,.identity-bar{grid-template-columns:1fr}
+    }
+
+
+    /* v1.1 cleanup */
+    section{margin:34px 0}
+    .section-head{margin-bottom:14px}
+    .section-head h2{margin-bottom:4px}
+    .card-body{padding:16px}
+    .hub-card,.leader-chip,.award,.archive-item,.game-center-card,.record-card,.race-card{padding:14px}
+    .identity-bar{margin:14px 0 22px}
+    .feature-story{padding:18px}
+    .gameday-hero{margin:0;padding:20px}
+    .top5{gap:8px}
+    .top5-row{padding:10px 12px}
+    .status-center{gap:8px}
+    .status-row{padding:9px 10px}
+    .game-center-grid{gap:10px}
+    .archive-grid{gap:10px}
+
+
+    #about{margin-top:20px;margin-bottom:24px}
+    #about .section-head{margin-bottom:10px}
+    #about .about-card{padding:14px 16px}
+
+
+    /* Mobile-first polish */
+    html{scroll-behavior:smooth}
+    body{overflow-x:hidden}
+    img,svg,video,canvas{max-width:100%;height:auto}
+    table{width:100%}
+
+    @media(max-width:900px){
+      .container, main, header > div, nav > div{width:min(100% - 24px, 1180px);margin-inline:auto}
+      nav ul{display:flex;gap:8px;overflow-x:auto;white-space:nowrap;padding:8px 0 10px;scrollbar-width:none}
+      nav ul::-webkit-scrollbar{display:none}
+      nav li{flex:0 0 auto}
+      nav a{display:block;padding:8px 10px;border-radius:999px;background:#1c1c1f;border:1px solid #303034;font-size:.82rem}
+      .hero{padding:28px 0}
+      .hero h1{font-size:clamp(2rem,8vw,3.4rem);line-height:.95}
+      .hero p{font-size:.95rem}
+      .score-strip,.identity-bar,.dashboard-grid,.grid,.leaders-grid,.status-center,.matchup-grid,
+      .game-center-grid,.archive-grid,.award-grid,.race-grid,.record-grid,.lineup-grid{
+        grid-template-columns:1fr 1fr !important;
+      }
+      .section-head{align-items:flex-start;gap:8px}
+      .section-head h2{font-size:1.35rem}
+      .section-head p{font-size:.88rem}
+      .card,.feature-story,.gameday-hero,.about-card{border-radius:10px}
+      .stats-wrap,.table-wrap,.stats-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+      table{min-width:760px}
+      .profile-modal,.modal-content{width:min(94vw,720px);max-height:88vh;overflow-y:auto}
+    }
+
+    @media(max-width:640px){
+      body{font-size:15px}
+      header{position:relative}
+      nav{position:sticky;top:0;z-index:30;background:rgba(12,12,14,.96);backdrop-filter:blur(10px)}
+      .container, main, header > div, nav > div{width:min(100% - 18px, 1180px)}
+      section{margin:24px 0}
+      .hero{padding:22px 0}
+      .hero h1{font-size:2.35rem}
+      .hero .kicker,.eyebrow{font-size:.68rem}
+      .score-strip,.identity-bar,.dashboard-grid,.grid,.leaders-grid,.status-center,.matchup-grid,
+      .game-center-grid,.archive-grid,.award-grid,.race-grid,.record-grid,.lineup-grid{
+        grid-template-columns:1fr !important;
+      }
+      .identity-card,.dashboard-card,.leader-card,.hub-card,.record-card,.race-card,.game-center-card,
+      .archive-item,.award,.card-body{padding:13px !important}
+      .section-head{display:block}
+      .section-head > * + *{margin-top:6px}
+      .gameday-hero .gd-top{display:block}
+      .gameday-hero .gd-top > div + div{margin-top:14px}
+      .lineup-row{grid-template-columns:28px minmax(0,1fr) 56px;padding:9px 10px}
+      .top5-row{grid-template-columns:30px minmax(0,1fr) auto}
+      .top5-row .stats-note{font-size:.75rem}
+      .share-row{display:grid;grid-template-columns:1fr}
+      .share-btn{width:100%}
+      .status-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}
+      .status-row small{grid-column:1/-1}
+      .game-center-card h3,.card h3,.feature-story h3{font-size:1.05rem}
+      .record-card .record-value{font-size:1.35rem}
+      .modal-content{width:94vw;padding:14px}
+      .profile-head{display:block}
+      .profile-head > * + *{margin-top:8px}
+      .profile-stats-grid{grid-template-columns:1fr 1fr !important}
+      .game-log{min-width:620px}
+      footer{padding:24px 0}
+      footer p{font-size:.78rem}
+    }
+
+    @media(max-width:420px){
+      .hero h1{font-size:2rem}
+      nav a{font-size:.76rem;padding:7px 9px}
+      .profile-stats-grid{grid-template-columns:1fr !important}
+      .identity-card strong{font-size:.95rem}
+      .section-head h2{font-size:1.2rem}
+      .card-body p,.feature-story p,.about-card p{font-size:.9rem;line-height:1.5}
+    }
+
+    footer{
+      border-top:1px solid #292929;
+      background:#101011;
+      color:#929292;
+      text-align:center;
+      padding:38px 20px;
+      font-size:.86rem;
+    }
+
+    .mobile-menu{display:none}
+
+    @media (max-width:850px){
+      nav ul{display:none}
+      .grid{grid-template-columns:1fr}
+      .roster{grid-template-columns:repeat(2,1fr)}
+      .score-wrap{grid-template-columns:1fr auto 1fr}
+      .game-row{grid-template-columns:90px 1fr}
+      .status{grid-column:2;justify-self:start}
+      .hero{min-height:570px}
+    }
+
+    @media (max-width:540px){
+      .brand-text strong{font-size:.9rem}
+      h1{font-size:3.25rem}
+      .score-wrap{gap:10px}
+      .team{font-size:.86rem}
+      .score{font-size:1.5rem}
+      .roster{grid-template-columns:1fr}
+      .spotlight{padding:28px}
+      .spotlight h2{font-size:2rem}
+      .section-head{align-items:start;flex-direction:column}
+    }
+  </style>
+  <script src="team-data.js"></script>
+  <meta name="theme-color" content="#8f1028">
+</head>
+<body>
+
+  <div class="topbar">North Tonawanda Fall Ball • Cardinals Coverage • 17-Player Roster</div>
+
+  <header>
+    <div class="nav">
+      <a class="brand" href="#top">
+        <div class="logo">C</div>
+        <div class="brand-text">
+          <span>The</span>
+          <strong>CARDINAL REPORT</strong>
+        </div>
+      </a>
+
+      <nav aria-label="Main navigation">
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#dashboard">Dashboard</a></li>
+          <li><a href="#gameday">Game Day</a></li>
+          <li><a href="#news">Weekly News</a></li>
+          <li><a href="#schedule">Schedule</a></li>
+          <li><a href="#game-center">Game Center</a></li>
+          <li><a href="#roster">Roster</a></li>
+          <li><a href="#stats">Stats</a></li>
+          <li><a href="#leaders">Leaders</a></li>
+          <li><a href="#status-center">Status</a></li>
+          <li><a href="#insider">Insider</a></li>
+          <li><a href="#awards">Awards</a></li>
+          <li><a href="#archive">Archive</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div id="top" class="hero">
+    <div class="hero-inner">
+      <span class="eyebrow">Game Day Headquarters</span>
+      <h1>The Cardinal Report</h1>
+      <p>
+        Your home for Cardinals game-day coverage, scores, schedule updates,
+        the full 17-player roster, Game Center, player status, fantasy tracking, team leaders, awards, insider news and everything happening this fall.
+      </p>
+      <div class="btns">
+        <a class="btn btn-red" href="#schedule">View Schedule</a>
+        <a class="btn btn-outline" href="#news">Latest Report</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="score-strip">
+    <div class="score-wrap">
+      <div class="team">Cardinals</div>
+      <div class="score">VS</div>
+      <div class="team away">NTNLL Pirates</div>
+    </div>
+  </div>
+  </div>
+  </div>
+
+  <div style="background:#c8102e;text-align:center;padding:10px 20px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;">
+    Next Game • Thursday, September 10 • 5:30 PM • North Tonawanda National
+  </div>
+
+  <main>
+
+<section id="about">
+      <div class="section-head"><div><h2>About The Cardinal Report</h2></div></div>
+      <div class="about-card">
+        <p><strong>The Cardinal Report</strong> is an independent team/fan coverage site for the North Tonawanda Cardinals fall baseball season. It tracks schedules, results, player stats, availability, fantasy-style points, game previews, postgame coverage, awards and team news.</p>
+      </div>
+    </section>
+<section id="team-identity">
+      <div class="identity-bar">
+        <div class="identity-card"><small>Team</small><strong>North Tonawanda Cardinals</strong></div>
+        <div class="identity-card"><small>Record</small><strong>0–4</strong></div>
+        <div class="identity-card"><small>Next Game</small><strong>Thu Sep. 10 • 5:30 PM</strong></div>
+        <div class="identity-card"><small>Current Streak</small><strong>L4</strong></div>
+      </div>
+      <div class="last-updated" id="lastUpdated">Last updated: Sept. 7, 2026 • Weekly Edition</div>
+    </section>
+
+<section id="dashboard">
+      <div class="section-head"><div><h2>Team Dashboard</h2><p>The season at a glance.</p></div></div>
+      <div class="hub-grid">
+        <div class="hub-card"><small>Record</small><div class="big">0–4</div><p>Six games remain.</p></div>
+        <div class="hub-card"><small>Runs Scored</small><div class="big">12</div><p>3.0 per game.</p></div>
+        <div class="hub-card"><small>Runs Allowed</small><div class="big">59</div><p>Through four official games.</p></div>
+        <div class="hub-card"><small>Team AVG</small><div class="big">.200</div><p>Current team stat sample.</p></div>
+      </div>
+
+      <div class="leader-strip">
+        <div class="leader-chip"><small>AVG Leader</small><strong>Preston — 1.000</strong></div>
+        <div class="leader-chip"><small>Hits Leader</small><strong>Logan — 3</strong></div>
+        <div class="leader-chip"><small>Fantasy Leader</small><strong>Anthony — 16 PTS</strong></div>
+        <div class="leader-chip"><small>Pitching K Leader</small><strong>Ryker — 11 K</strong></div>
+      </div>
+
+      <div class="countdown-box">
+        <span class="eyebrow">Countdown to First Pitch</span>
+        <h3>Cardinals @ NTNLL Pirates • Thursday, Sept. 10 • 5:30 PM</h3>
+        <div class="countdown">
+          <div class="count-unit"><b id="cdDays">--</b>Days</div>
+          <div class="count-unit"><b id="cdHours">--</b>Hours</div>
+          <div class="count-unit"><b id="cdMinutes">--</b>Minutes</div>
+          <div class="count-unit"><b id="cdSeconds">--</b>Seconds</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="gameday">
+      <div class="section-head"><div><h2>Live Game Mode</h2><p>Game-day information in one place.</p></div></div>
+      <div class="gameday-hero">
+        <div class="gd-top">
+          <div>
+            <span class="gameday-badge">Next Up</span>
+            <h3>Cardinals @ NTNLL Pirates</h3>
+            <p>Thursday, Sept. 10 • 5:30 PM • North Tonawanda National</p>
+          </div>
+          <div><strong style="font-size:2rem">0–4</strong><br><span class="stats-note">Cardinals record</span></div>
+        </div>
+        <p><strong>Availability watch:</strong> Preston Michaletz #13 is 🟡 Day-to-Day, activated from the 15-Day IL but not yet cleared to play.</p>
+      </div>
+    </section>
+
+    
+
+    <section id="news">
+      <div class="section-head">
+        <div>
+          <h2>Weekly News</h2>
+          <p>The Cardinal Report weekly roundup — updated once each week with the biggest team stories.</p>
+        </div>
+      </div>
+
+      <div class="feature-story">
+        <span class="eyebrow">Week of Sept. 7</span>
+        <h3>Cardinals Prepare for Pirates as Preston Moves to Day-to-Day</h3>
+        <p>The Cardinals enter the week at 0–4 with a Thursday matchup against NTNLL Pirates. Preston Michaletz has been activated from the 15-Day IL but remains day-to-day and has not been cleared to play. A decision is expected after Wednesday practice.</p>
+      </div>
+
+      <div class="grid" style="margin-top:14px">
+        <article class="card">
+          <div class="card-body">
+            <span class="eyebrow">Team Update</span>
+            <h3>Next Up: NTNLL Pirates</h3>
+            <p>Thursday, Sept. 10 at 5:30 PM at North Tonawanda National.</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-body">
+            <span class="eyebrow">Player Update</span>
+            <h3>Preston Remains Day-to-Day</h3>
+            <p>Activated from the 15-Day IL, but not cleared to return. Wednesday practice is the next checkpoint.</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-body">
+            <span class="eyebrow">Fantasy Watch</span>
+            <h3>Anthony Leads the Board</h3>
+            <p>Anthony Gonzalas currently sits first in the Cardinal Report fantasy standings with 16 points.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+<section id="schedule">
+      <div class="section-head">
+        <div>
+          <h2>Schedule & Results</h2>
+          <p>2026 Cardinals fall ball schedule • Record: 0–4</p>
+        </div>
+      </div>
+
+      <div class="schedule">
+        <div class="game-row" onclick="location.hash=&quot;game-aug25&quot;" title="Open Game Center">
+          <div class="date">Tue • Aug 25</div>
+          <div class="matchup">
+            <strong>@ Mets NTNLL</strong>
+            <span>North Tonawanda National</span>
+          </div>
+          <div class="status loss">L 4–5</div>
+        </div>
+
+        <div class="game-row" onclick="location.hash=&quot;game-aug29&quot;" title="Open Game Center">
+          <div class="date">Sat • Aug 29</div>
+          <div class="matchup">
+            <strong>vs NTNLL - Brewers - Goodband</strong>
+            <span>North Tonawanda National</span>
+          </div>
+          <div class="status loss">L 1–20</div>
+        </div>
+
+        <div class="game-row" onclick="location.hash=&quot;game-sep1&quot;" title="Open Game Center">
+          <div class="date">Tue • Sep 1</div>
+          <div class="matchup">
+            <strong>vs Rockies</strong>
+            <span>North Tonawanda National</span>
+          </div>
+          <div class="status loss">L 1–24</div>
+        </div>
+
+        <div class="game-row" onclick="location.hash=&quot;game-sep5&quot;" title="Open Game Center">
+          <div class="date">Sat • Sep 5</div>
+          <div class="matchup">
+            <strong>@ Laboeuf Dodgers</strong>
+            <span>North Tonawanda National</span>
+          </div>
+          <div class="status loss">L 6–10</div>
+        </div>
+
+        <div class="game-row" onclick="location.hash=&quot;game-sep10&quot;" title="Open Game Center">
+          <div class="date">Thu • Sep 10</div>
+          <div class="matchup">
+            <strong>@ NTNLL Pirates Fall 2026</strong>
+            <span>5:30 PM • North Tonawanda National</span>
+          </div>
+          <div class="status live">Next Game</div>
+        </div>
+
+        <div class="game-row" onclick="location.hash=&quot;game-sep12&quot;" title="Open Game Center">
+          <div class="date">Sat • Sep 12</div>
+          <div class="matchup">
+            <strong>vs Diamondbacks NTNLL</strong>
+            <span>12:40 PM • North Tonawanda National</span>
+          </div>
+          <div class="status">Upcoming</div>
+        </div>
+
+        <div class="game-row" onclick="location.hash=&quot;game-sep19&quot;" title="Open Game Center">
+          <div class="date">Sat • Sep 19</div>
+          <div class="matchup">
+            <strong>vs Mets NTNLL</strong>
+            <span>8:00 AM • North Tonawanda National</span>
+          </div>
+          <div class="status">Upcoming</div>
+        </div>
+
+        <div class="game-row" onclick="location.hash=&quot;game-sep26&quot;" title="Open Game Center">
+          <div class="date">Sat • Sep 26</div>
+          <div class="matchup">
+            <strong>vs NTNLL Pirates Fall 2026</strong>
+            <span>8:00 AM • North Tonawanda National</span>
+          </div>
+          <div class="status">Upcoming</div>
+        </div>
+
+        <div class="game-row" onclick="location.hash=&quot;game-sep28&quot;" title="Open Game Center">
+          <div class="date">Mon • Sep 28</div>
+          <div class="matchup">
+            <strong>vs NTNLL - Brewers - Goodband</strong>
+            <span>5:30 PM • North Tonawanda National</span>
+          </div>
+          <div class="status">Upcoming</div>
+        </div>
+
+        <div class="game-row" onclick="location.hash=&quot;game-oct3&quot;" title="Open Game Center">
+          <div class="date">Sat • Oct 3</div>
+          <div class="matchup">
+            <strong>vs Rockies</strong>
+            <span>10:20 AM • North Tonawanda National</span>
+          </div>
+          <div class="status">Upcoming</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="game-center">
+      <div class="section-head"><div><h2>Game Center</h2><p>Every game now has its own season card.</p></div></div>
+      <div class="game-center-grid"><article class="game-center-card" id="game-aug25">
+      <span class="eyebrow">Final</span>
+      <h3>Aug 25 • @ Mets NTNLL</h3>
+      <div class="gc-score">L 4–5</div>
+      <p>Cardinals fell by one run in the season opener. Full inning-by-inning notes can be added when available.</p>
+      <p class="stats-note">Game-specific player stats, Cardinal of the Game and fantasy totals will appear here when game data is available.</p>
+    </article>
+<article class="game-center-card" id="game-aug29">
+      <span class="eyebrow">Final</span>
+      <h3>Aug 29 • vs Brewers - Goodband</h3>
+      <div class="gc-score">L 1–20</div>
+      <p>A difficult second game for the Cardinals. The result is preserved here as part of the season archive.</p>
+      <p class="stats-note">Game-specific player stats, Cardinal of the Game and fantasy totals will appear here when game data is available.</p>
+    </article>
+<article class="game-center-card" id="game-sep1">
+      <span class="eyebrow">Final</span>
+      <h3>Sep 1 • vs Rockies</h3>
+      <div class="gc-score">L 1–24</div>
+      <p>The Cardinals dropped the third official game of the fall schedule.</p>
+      <p class="stats-note">Game-specific player stats, Cardinal of the Game and fantasy totals will appear here when game data is available.</p>
+    </article>
+<article class="game-center-card" id="game-sep5">
+      <span class="eyebrow">Final</span>
+      <h3>Sep 5 • @ Laboeuf Dodgers</h3>
+      <div class="gc-score">L 6–10</div>
+      <p>The offense scored a season-high six runs in the loss.</p>
+      <p class="stats-note">Game-specific player stats, Cardinal of the Game and fantasy totals will appear here when game data is available.</p>
+    </article>
+<article class="game-center-card" id="game-sep10">
+      <span class="eyebrow">Next Game</span>
+      <h3>Sep 10 • @ NTNLL Pirates</h3>
+      <div class="gc-score">5:30 PM</div>
+      <p>Thursday at North Tonawanda National. Preston is day-to-day and not yet cleared.</p>
+      <p class="stats-note">Game-specific player stats, Cardinal of the Game and fantasy totals will appear here when game data is available.</p>
+    </article>
+<article class="game-center-card" id="game-sep12">
+      <span class="eyebrow">Upcoming</span>
+      <h3>Sep 12 • vs Diamondbacks NTNLL</h3>
+      <div class="gc-score">12:40 PM</div>
+      <p>Saturday matchup at North Tonawanda National.</p>
+      <p class="stats-note">Game-specific player stats, Cardinal of the Game and fantasy totals will appear here when game data is available.</p>
+    </article>
+<article class="game-center-card" id="game-sep19">
+      <span class="eyebrow">Upcoming</span>
+      <h3>Sep 19 • vs Mets NTNLL</h3>
+      <div class="gc-score">8:00 AM</div>
+      <p>Rematch with the Mets.</p>
+      <p class="stats-note">Game-specific player stats, Cardinal of the Game and fantasy totals will appear here when game data is available.</p>
+    </article>
+<article class="game-center-card" id="game-sep26">
+      <span class="eyebrow">Upcoming</span>
+      <h3>Sep 26 • vs NTNLL Pirates</h3>
+      <div class="gc-score">8:00 AM</div>
+      <p>Second scheduled Pirates matchup.</p>
+      <p class="stats-note">Game-specific player stats, Cardinal of the Game and fantasy totals will appear here when game data is available.</p>
+    </article>
+<article class="game-center-card" id="game-sep28">
+      <span class="eyebrow">Upcoming</span>
+      <h3>Sep 28 • vs Brewers - Goodband</h3>
+      <div class="gc-score">5:30 PM</div>
+      <p>Second scheduled Brewers matchup.</p>
+      <p class="stats-note">Game-specific player stats, Cardinal of the Game and fantasy totals will appear here when game data is available.</p>
+    </article>
+<article class="game-center-card" id="game-oct3">
+      <span class="eyebrow">Upcoming</span>
+      <h3>Oct 3 • vs Rockies</h3>
+      <div class="gc-score">10:20 AM</div>
+      <p>Regular fall schedule finale.</p>
+      <p class="stats-note">Game-specific player stats, Cardinal of the Game and fantasy totals will appear here when game data is available.</p>
+    </article></div>
+    </section>
+
+    <section id="roster">
+      <div class="section-head">
+        <div>
+          <h2>Cardinals Roster</h2>
+          <p>Official 17-player Cardinals roster • Positions based on 2026 innings played.</p>
+        </div>
+      </div>
+
+      <div class="roster">
+        <div class="player" data-profile="0" role="button" tabindex="0" aria-label="View Lincon Toutkalty profile">
+          <div class="number">#1</div>
+          <h3>Lincon Toutkalty</h3>
+          <p>3B / SS</p>
+          <span class="view-profile">View profile →</span>
+        </div>
+        <div class="player" data-profile="1" role="button" tabindex="0" aria-label="View Parker Arras profile">
+          <div class="number">#2</div>
+          <h3>Parker Arras</h3>
+          <p>2B / LF</p>
+          <span class="view-profile">View profile →</span>
+        </div>
+        <div class="player" data-profile="2" role="button" tabindex="0" aria-label="View Ryleigh Mullins profile">
+          <div class="number">#4</div>
+          <h3>Ryleigh Mullins</h3>
+          <p>C / 2B</p>
+          <span class="view-profile">View profile →</span>
+        </div>
+        <div class="player" data-profile="3" role="button" tabindex="0" aria-label="View Arnold Rydzynski profile">
+          <div class="number">#5</div>
+          <h3>Arnold Rydzynski</h3>
+          <p>SS / 2B / 1B</p>
+          <span class="view-profile">View profile →</span>
+        </div>
+        <div class="player" data-profile="4" role="button" tabindex="0" aria-label="View Mikey Marino profile">
+          <div class="number">#6</div>
+          <h3>Mikey Marino</h3>
+          <p>RF</p>
+          <span class="view-profile">View profile →</span>
+        </div>
+        <div class="player" data-profile="5" role="button" tabindex="0" aria-label="View Anthony Gonzalas profile">
+          <div class="number">#7</div>
+          <h3>Anthony Gonzalas</h3>
+          <p>C / P</p>
+          <span class="view-profile">View profile →</span>
+        </div>
+        <div class="player" data-profile="6" role="button" tabindex="0" aria-label="View Elijah Leight profile">
+          <div class="number">#8</div>
+          <h3>Elijah Leight</h3>
+          <p>LF / RF</p>
+          <span class="view-profile">View profile →</span>
+        </div>
+        <div class="player" data-profile="7" role="button" tabindex="0" aria-label="View Jaxon Maynard profile">
+          <div class="number">#9</div>
+          <h3>Jaxon Maynard</h3>
+          <p>P / 1B / 3B</p>
+          <span class="view-profile">View profile →</span>
+        </div>
+        <div class="player" data-profile="8" role="button" tabindex="0" aria-label="View Logan Brent profile">
+          <div class="number">#10</div>
+          <h3>Logan Brent</h3>
+          <p>1B / C</p>
+          <span class="view-profile">View profile →</span>
+        </div>
+        <div class="player" data-profile="9" role="button" tabindex="0" aria-label="View Adian Scott profile">
+          <div class="number">#11</div>
+          <h3>Adian Scott</h3>
+          <p>CF</p>
+          <span class="view-profile">View profile →</span>
+        </div>
+        <div class="player" data-profile="10" role="button" tabindex="0" aria-label="View Ryker Topkino profile">
+          <div class="number">#11</div>
+          <h3>Ryker Topkino</h3>
+          <p>SS / P</p>
+          <span class="view-profile">View profile →</span>
+        </div>
+        <div class="player" data-profile="11" role="button" tabindex="0" aria-label="View Zeke Dankert profile">
+          <div class="number">#12</div>
+          <h3>Zeke Dankert</h3>
+          <p>LF / 2B</p>
+          <span class="view-profile">View profile →</span>
+        </div>
+        <div class="player" data-profile="12" role="button" tabindex="0" aria-label="View Preston Michaletz profile">
+          <div class="number">#13</div>
+          <h3>Preston Michaletz</h3>
+          <p>P / 1B</p>
+          <span class="view-profile">View profile →</span>
+        </div>
+        <div class="player" data-profile="13" role="button" tabindex="0" aria-label="View Clark Cich profile">
+          <div class="number">#14</div>
+          <h3>Clark Cich</h3>
+          <p>3B / C</p>
+          <span class="view-profile">View profile →</span>
+        </div>
+        <div class="player" data-profile="14" role="button" tabindex="0" aria-label="View Mason Dorazio profile">
+          <div class="number">#15</div>
+          <h3>Mason Dorazio</h3>
+          <p>RF</p>
+          <span class="view-profile">View profile →</span>
+        </div>
+        <div class="player" data-profile="15" role="button" tabindex="0" aria-label="View Joel Dorazio profile">
+          <div class="number">#16</div>
+          <h3>Joel Dorazio</h3>
+          <p>RF</p>
+          <span class="view-profile">View profile →</span>
+        </div>
+        <div class="player" data-profile="16" role="button" tabindex="0" aria-label="View Nicholas Misoi profile">
+          <div class="number">#17</div>
+          <h3>Nicholas Misoi</h3>
+          <p>LF / 2B</p>
+          <span class="view-profile">View profile →</span>
+        </div>
+      </div>
+    </section>
+
+
+
+    <section id="stats">
+      <div class="section-head">
+        <div>
+          <h2>Player Stats</h2>
+          <p>Full Cardinals player stat board • Batting, pitching and fielding.</p>
+        </div>
+      </div>
+
+      <div class="stats-wrap">
+        <table class="stats-table">
+          <thead>
+            <tr>
+              <th>Player</th><th>GP</th><th>PA</th><th>AB</th><th>AVG</th><th>OBP</th><th>OPS</th>
+              <th>H</th><th>1B</th><th>2B</th><th>RBI</th><th>R</th><th>BB</th><th>SO</th><th>SB</th>
+              <th>IP</th><th>ERA</th><th>WHIP</th><th>K</th><th>FPCT</th><th>E</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+      <tr>
+        <td><strong>Anthony Gonzalas #7</strong></td><td>2</td><td>3</td><td>3</td>
+        <td><strong>.667</strong></td><td>.667</td><td>1.667</td><td>2</td>
+        <td>1</td><td>1</td><td>0</td><td>2</td><td>0</td><td>0</td><td>4</td>
+        <td>3.0</td><td>2.33</td><td>.667</td><td>4</td>
+        <td>1.000</td><td>0</td>
+      </tr>
+      <tr>
+        <td><strong>Preston Michaletz #13</strong></td><td>2</td><td>3</td><td>1</td>
+        <td><strong>1.000</strong></td><td>1.000</td><td>2.000</td><td>1</td>
+        <td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>4</td>
+        <td>4.0</td><td>18.00</td><td>—</td><td>9</td>
+        <td>1.000</td><td>0</td>
+      </tr>
+      <tr>
+        <td><strong>Logan Brent #10</strong></td><td>4</td><td>7</td><td>6</td>
+        <td><strong>.500</strong></td><td>.571</td><td>1.238</td><td>3</td>
+        <td>2</td><td>1</td><td>1</td><td>2</td><td>1</td><td>1</td><td>4</td>
+        <td>—</td><td>—</td><td>—</td><td>—</td>
+        <td>.889</td><td>1</td>
+      </tr>
+      <tr>
+        <td><strong>Arnold Rydzynski #5</strong></td><td>3</td><td>7</td><td>7</td>
+        <td><strong>.286</strong></td><td>.286</td><td>.571</td><td>2</td>
+        <td>2</td><td>0</td><td>0</td><td>1</td><td>0</td><td>4</td><td>3</td>
+        <td>—</td><td>—</td><td>—</td><td>—</td>
+        <td>.500</td><td>1</td>
+      </tr>
+      <tr>
+        <td><strong>Parker Arras #2</strong></td><td>3</td><td>4</td><td>4</td>
+        <td><strong>.250</strong></td><td>.250</td><td>.500</td><td>1</td>
+        <td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>3</td><td>0</td>
+        <td>0.0</td><td>—</td><td>—</td><td>0</td>
+        <td>—</td><td>0</td>
+      </tr>
+      <tr>
+        <td><strong>Ryker Topkino #11</strong></td><td>4</td><td>9</td><td>4</td>
+        <td><strong>.250</strong></td><td>.667</td><td>.917</td><td>1</td>
+        <td>1</td><td>0</td><td>0</td><td>1</td><td>4</td><td>1</td><td>1</td>
+        <td>5.2</td><td>27.18</td><td>5.294</td><td>11</td>
+        <td>1.000</td><td>0</td>
+      </tr>
+      <tr>
+        <td><strong>Mikey Marino #6</strong></td><td>3</td><td>5</td><td>4</td>
+        <td><strong>.250</strong></td><td>.400</td><td>.650</td><td>1</td>
+        <td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>2</td><td>0</td>
+        <td>—</td><td>—</td><td>—</td><td>—</td>
+        <td>—</td><td>0</td>
+      </tr>
+      <tr>
+        <td><strong>Adian Scott #11</strong></td><td>4</td><td>7</td><td>5</td>
+        <td><strong>.200</strong></td><td>.429</td><td>.829</td><td>1</td>
+        <td>0</td><td>1</td><td>2</td><td>1</td><td>1</td><td>2</td><td>1</td>
+        <td>—</td><td>—</td><td>—</td><td>—</td>
+        <td>1.000</td><td>0</td>
+      </tr>
+      <tr>
+        <td><strong>Clark Cich #14</strong></td><td>4</td><td>7</td><td>5</td>
+        <td><strong>.200</strong></td><td>.429</td><td>.629</td><td>1</td>
+        <td>1</td><td>0</td><td>0</td><td>1</td><td>2</td><td>2</td><td>2</td>
+        <td>2.0</td><td>7.00</td><td>4.000</td><td>0</td>
+        <td>.923</td><td>1</td>
+      </tr>
+      <tr>
+        <td><strong>Nicholas Misoi</strong></td><td>4</td><td>7</td><td>5</td>
+        <td><strong>.200</strong></td><td>.429</td><td>.629</td><td>1</td>
+        <td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>4</td><td>1</td>
+        <td>—</td><td>—</td><td>—</td><td>—</td>
+        <td>1.000</td><td>0</td>
+      </tr>
+      <tr>
+        <td><strong>Jaxon Maynard #9</strong></td><td>4</td><td>7</td><td>6</td>
+        <td><strong>.000</strong></td><td>.143</td><td>.143</td><td>0</td>
+        <td>0</td><td>0</td><td>2</td><td>0</td><td>1</td><td>3</td><td>0</td>
+        <td>5.0</td><td>18.20</td><td>4.000</td><td>7</td>
+        <td>—</td><td>0</td>
+      </tr>
+      <tr>
+        <td><strong>Ryleigh Mullins #4</strong></td><td>3</td><td>7</td><td>4</td>
+        <td><strong>.000</strong></td><td>.333</td><td>.333</td><td>0</td>
+        <td>0</td><td>0</td><td>0</td><td>1</td><td>2</td><td>2</td><td>2</td>
+        <td>—</td><td>—</td><td>—</td><td>—</td>
+        <td>1.000</td><td>0</td>
+      </tr>
+      <tr>
+        <td><strong>Elijah Leight #8</strong></td><td>4</td><td>8</td><td>5</td>
+        <td><strong>.000</strong></td><td>.375</td><td>.375</td><td>0</td>
+        <td>0</td><td>0</td><td>0</td><td>0</td><td>3</td><td>5</td><td>0</td>
+        <td>—</td><td>—</td><td>—</td><td>—</td>
+        <td>1.000</td><td>0</td>
+      </tr>
+      <tr>
+        <td><strong>Lincon Toutkalty #1</strong></td><td>3</td><td>5</td><td>2</td>
+        <td><strong>.000</strong></td><td>.600</td><td>.600</td><td>0</td>
+        <td>0</td><td>0</td><td>0</td><td>1</td><td>3</td><td>2</td><td>1</td>
+        <td>—</td><td>—</td><td>—</td><td>—</td>
+        <td>.600</td><td>2</td>
+      </tr>
+      <tr>
+        <td><strong>Zeke Dankert #12</strong></td><td>3</td><td>4</td><td>2</td>
+        <td><strong>.000</strong></td><td>.500</td><td>.500</td><td>0</td>
+        <td>0</td><td>0</td><td>0</td><td>0</td><td>2</td><td>2</td><td>3</td>
+        <td>—</td><td>—</td><td>—</td><td>—</td>
+        <td>.500</td><td>2</td>
+      </tr>
+      <tr>
+        <td><strong>Mason Dorazio #15</strong></td><td>4</td><td>5</td><td>3</td>
+        <td><strong>.000</strong></td><td>.400</td><td>.400</td><td>0</td>
+        <td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>3</td><td>2</td>
+        <td>—</td><td>—</td><td>—</td><td>—</td>
+        <td>—</td><td>0</td>
+      </tr>
+      <tr>
+        <td><strong>Joel Dorazio</strong></td><td>4</td><td>5</td><td>3</td>
+        <td><strong>.000</strong></td><td>.400</td><td>.400</td><td>0</td>
+        <td>0</td><td>0</td><td>0</td><td>0</td><td>2</td><td>2</td><td>1</td>
+        <td>—</td><td>—</td><td>—</td><td>—</td>
+        <td>—</td><td>0</td>
+      </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="stats-note">Scroll sideways on smaller screens to see every category. Preston's AVG, innings pitched and ERA use the corrected numbers provided directly.</p>
+    </section>
+
+
+
+
+
+    
+    <section id="leaders">
+      <div class="section-head"><div><h2>Team Leaders</h2><p>Current leaders from the available season stats.</p></div></div>
+      <div class="hub-grid">
+        <div class="hub-card"><small>Batting Average</small><div class="big">1.000</div><p>Preston Michaletz</p></div>
+        <div class="hub-card"><small>On-Base %</small><div class="big">1.000</div><p>Preston Michaletz</p></div>
+        <div class="hub-card"><small>Hits</small><div class="big">3</div><p>Logan Brent</p></div>
+        <div class="hub-card"><small>RBI</small><div class="big">2</div><p>Adian Scott / Jaxon Maynard</p></div>
+        <div class="hub-card"><small>Stolen Bases</small><div class="big">4</div><p>Anthony / Preston / Logan</p></div>
+        <div class="hub-card"><small>Pitching ERA</small><div class="big">2.33</div><p>Anthony Gonzalas</p></div>
+        <div class="hub-card"><small>Strikeouts</small><div class="big">11</div><p>Ryker Topkino</p></div>
+        <div class="hub-card"><small>Innings Pitched</small><div class="big">5.2</div><p>Ryker Topkino</p></div>
+      </div>
+    </section>
+
+    <section id="status-center">
+      <div class="section-head"><div><h2>Team Status Center</h2><p>🟢 good to play • 🟡 day-to-day • 🔴 out/worse</p></div></div>
+      <div class="status-center"><div class="status-row"><strong>Lincon Toutkalty #1</strong><span class="availability-pill status-green"><i class="availability-dot"></i>Good to Play</span></div>
+<div class="status-row"><strong>Parker Arras #2</strong><span class="availability-pill status-green"><i class="availability-dot"></i>Good to Play</span></div>
+<div class="status-row"><strong>Ryleigh Mullins #4</strong><span class="availability-pill status-green"><i class="availability-dot"></i>Good to Play</span></div>
+<div class="status-row"><strong>Arnold Rydzynski #5</strong><span class="availability-pill status-green"><i class="availability-dot"></i>Good to Play</span></div>
+<div class="status-row"><strong>Mikey Marino #6</strong><span class="availability-pill status-green"><i class="availability-dot"></i>Good to Play</span></div>
+<div class="status-row"><strong>Anthony Gonzalas #7</strong><span class="availability-pill status-green"><i class="availability-dot"></i>Good to Play</span></div>
+<div class="status-row"><strong>Elijah Leight #8</strong><span class="availability-pill status-green"><i class="availability-dot"></i>Good to Play</span></div>
+<div class="status-row"><strong>Jaxon Maynard #9</strong><span class="availability-pill status-green"><i class="availability-dot"></i>Good to Play</span></div>
+<div class="status-row"><strong>Logan Brent #10</strong><span class="availability-pill status-green"><i class="availability-dot"></i>Good to Play</span></div>
+<div class="status-row"><strong>Adian Scott #11</strong><span class="availability-pill status-green"><i class="availability-dot"></i>Good to Play</span></div>
+<div class="status-row"><strong>Ryker Topkino #11</strong><span class="availability-pill status-green"><i class="availability-dot"></i>Good to Play</span></div>
+<div class="status-row"><strong>Zeke Dankert #12</strong><span class="availability-pill status-green"><i class="availability-dot"></i>Good to Play</span></div>
+<div class="status-row"><strong>Preston Michaletz #13</strong><span class="availability-pill status-yellow"><i class="availability-dot"></i>Day-to-Day</span></div>
+<div class="status-row"><strong>Clark Cich #14</strong><span class="availability-pill status-green"><i class="availability-dot"></i>Good to Play</span></div>
+<div class="status-row"><strong>Mason Dorazio #15</strong><span class="availability-pill status-green"><i class="availability-dot"></i>Good to Play</span></div>
+<div class="status-row"><strong>Joel Dorazio</strong><span class="availability-pill status-green"><i class="availability-dot"></i>Good to Play</span></div>
+<div class="status-row"><strong>Nicholas Misoi</strong><span class="availability-pill status-green"><i class="availability-dot"></i>Good to Play</span></div></div>
+      <p class="stats-note">Current exception: Preston is activated from the 15-Day IL but has not been cleared to play yet.</p>
+    </section>
+
+    <section id="insider">
+      <div class="section-head">
+        <div>
+          <h2>Cardinal Report Insider</h2>
+          <p>Fantasy, breaking news, injuries, returns, trends, previews and postgame coverage.</p>
+        </div>
+      </div>
+
+      <div class="insider-stack">
+
+        <div class="breaking-banner">
+          <div class="breaking-kicker">🚨 Breaking — The Cardinal Report</div>
+          <h3>Preston Officially Day-to-Day as Possible Return Nears</h3>
+          <p>Preston has been <strong>activated from the 15-Day IL</strong> and is officially <strong>DAY-TO-DAY</strong> as he continues working his way back from a strained tricep. He has <strong>not been cleared to play yet</strong>.</p>
+          <p>At approximately <strong>10:47 AM today</strong>, Preston spoke with Cardinals coaching staff and informed them that he feels ready to return to the lineup. The brief call ended around <strong>10:48 AM</strong>, with coaches telling him they’ll make a decision following <strong>Wednesday’s practice</strong>.</p>
+          <p>Preston has already returned to light baseball activity and has spent recent games coaching third base while sidelined.</p>
+          <p>Before the injury, Preston was <strong>1-for-1 with 1 RBI, 1 BB and 0 K</strong>, reaching base in both plate appearances.</p>
+          <p>The Cardinals aren’t getting their pitcher back just yet — <strong>but they could be getting one of their biggest bats and a key piece of their infield back. 👀</strong></p>
+          <p>If Wednesday goes well, <strong>Thursday is the first possible return date.</strong> If more time is needed, <strong>Saturday, Sept. 12</strong> becomes the next target. Nothing is official yet.</p>
+          <div class="breaking-status">
+            <span>👀 STATUS: DAY-TO-DAY</span>
+            <span>⏳ DECISION: WEDNESDAY</span>
+            <span>⚾ POSSIBLE RETURN: THURSDAY</span>
+          </div>
+          <p style="margin-top:16px;margin-bottom:0;">— <strong>The Cardinal Report 📝</strong></p>
+        </div>
+
+        <div class="grid">
+          <article class="card">
+            <div class="card-body">
+              <span class="eyebrow">Injury Report</span>
+              <h3>Player Availability</h3>
+              <div class="availability-legend">
+                <span class="availability-pill status-green"><i class="availability-dot"></i>Good to Play</span>
+                <span class="availability-pill status-yellow"><i class="availability-dot"></i>Day-to-Day</span>
+                <span class="availability-pill status-red"><i class="availability-dot"></i>Out / Worse</span>
+              </div>
+              <div class="mini-card">
+                <span class="availability-pill status-yellow"><i class="availability-dot"></i>Day-to-Day</span>
+                <h4 style="margin-top:10px;">Preston Michaletz #13</h4>
+                <p>Activated from the 15-Day IL, but <strong>not cleared to play yet</strong>. Strained tricep. Next evaluation: Wednesday practice. Earliest possible return: Thursday.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-body">
+              <span class="eyebrow">Return Tracker</span>
+              <h3>Preston Return Watch</h3>
+              <p>Preston has resumed light baseball activity and told the coaching staff he feels ready to return to the lineup. Nothing is official until the post-practice decision.</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-body">
+              <span class="eyebrow">Fantasy</span>
+              <h3>Fantasy Player of the Week</h3>
+              <p><strong>Anthony Gonzalas #7</strong> currently leads the season fantasy board with 16 points and is the early fantasy player to beat.</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="grid">
+          <article class="card">
+            <div class="card-body">
+              <span class="eyebrow">Stock Watch</span>
+              <h3>Stock Up</h3>
+              <div class="mini-grid">
+                <div class="mini-card">
+                  <span class="tag green">Up</span>
+                  <h4>Anthony Gonzalas #7</h4>
+                  <p>.667 AVG with strong early production and the current fantasy lead.</p>
+                </div>
+                <div class="mini-card">
+                  <span class="tag green">Up</span>
+                  <h4>Logan Brent #10</h4>
+                  <p>.500 AVG and second on the current fantasy leaderboard.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-body">
+              <span class="eyebrow">Trend Watch</span>
+              <h3>Cold Streaks</h3>
+              <div class="mini-grid">
+                <div class="mini-card">
+                  <span class="tag">Stat Watch</span>
+                  <h4>Team Offense</h4>
+                  <p>The Cardinals are hitting .200 as a team through the current stat sample.</p>
+                </div>
+                <div class="mini-card">
+                  <span class="tag">Stat Watch</span>
+                  <h4>Early Results</h4>
+                  <p>The team enters the next matchup at 0–4, making the next stretch especially important.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-body">
+              <span class="eyebrow">Hot Players</span>
+              <h3>Current Hot Board</h3>
+              <p><strong>Preston Michaletz #13</strong> — 1.000 AVG<br>
+                 <strong>Anthony Gonzalas #7</strong> — .667 AVG<br>
+                 <strong>Logan Brent #10</strong> — .500 AVG</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="grid">
+          <article class="card">
+            <div class="card-body">
+              <span class="eyebrow">Projected Lineup</span>
+              <h3>Next Game Projection</h3>
+              <p>Projected lineup will be posted once a batting order or likely defensive alignment is known. The Cardinal Report will not invent one without enough information.</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-body">
+              <span class="eyebrow">Players to Watch</span>
+              <h3>Next Matchup</h3>
+              <p><strong>Anthony Gonzalas #7</strong> — hottest early bat.<br>
+                 <strong>Logan Brent #10</strong> — .500 AVG.<br>
+                 <strong>Preston Michaletz #13</strong> — perfect batting average so far.</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-body">
+              <span class="eyebrow">What We’re Hearing</span>
+              <h3>Insider Notebook</h3>
+              <p>No rumor items are active. This section will only use updates you provide or confirmed team information.</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="grid">
+          <article class="card">
+            <div class="card-body">
+              <span class="eyebrow">Game Preview</span>
+              <h3>Cardinals vs NTNLL Pirates</h3>
+              <p>Thursday, September 10 • 5:30 PM • North Tonawanda National. The Cardinals enter at 0–4 and will look to break through in the next game.</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-body">
+              <span class="eyebrow">Postgame Report</span>
+              <h3>Latest Result</h3>
+              <p>The latest completed game was a 6–10 loss to Laboeuf Dodgers on September 5. Full recap details can be added whenever game notes are available.</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-body">
+              <span class="eyebrow">Cardinal of the Game</span>
+              <h3>Performance Award</h3>
+              <p>This award will be assigned after each game using actual performance from that game instead of season totals.</p>
+            </div>
+          </article>
+        </div>
+
+        <article class="card insider-wide">
+          <div class="card-body">
+            <span class="eyebrow">Fantasy Power Rankings</span>
+            <h3>Season Board</h3>
+            <table class="rank-table">
+              <tr><td>1. Anthony Gonzalas #7</td><td>16 PTS <span class="flat">—</span></td></tr>
+              <tr><td>2. Logan Brent #10</td><td>11 PTS <span class="flat">—</span></td></tr>
+              <tr><td>3. Adian Scott #11</td><td>5 PTS <span class="flat">—</span></td></tr>
+              <tr><td>4. Ryleigh Mullins #4</td><td>3 PTS <span class="flat">—</span></td></tr>
+              <tr><td>5. Lincon Toutkalty #1</td><td>3 PTS <span class="flat">—</span></td></tr>
+            </table>
+            <p class="stats-note">Trend arrows will activate once there is another stat update to compare against this ranking.</p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+
+
+    <section id="awards">
+      <div class="section-head"><div><h2>Awards Center</h2><p>Season and game honors.</p></div></div>
+      <div class="award-grid">
+        <div class="award"><div class="trophy">🏆</div><span class="eyebrow">Fantasy Player of the Week</span><h3>Anthony Gonzalas</h3><p>Current fantasy leader: 16 PTS.</p></div>
+        <div class="award"><div class="trophy">⭐</div><span class="eyebrow">Cardinal of the Game</span><h3>Awaiting Next Selection</h3><p>Chosen from actual single-game performance.</p></div>
+        <div class="award"><div class="trophy">⚾</div><span class="eyebrow">Weekly Awards</span><h3>Hitter / Pitcher</h3><p>Will update as weekly game samples are completed.</p></div>
+      </div>
+    </section>
+
+    <section id="featured-story">
+      <div class="section-head"><div><h2>Featured Story</h2><p>The lead Cardinal Report story.</p></div></div>
+      <div class="feature-story">
+        <span class="eyebrow">Breaking • Return Watch</span>
+        <h3>Preston Activated From 15-Day IL, Still Awaiting Clearance</h3>
+        <p>Preston is officially day-to-day as the Cardinals wait for Wednesday’s practice before making a decision on his return. Thursday is the earliest possible return date, with Saturday, Sept. 12 as the next target if more time is needed.</p>
+      </div>
+    </section>
+<section id="lineup">
+      <div class="section-head"><div><h2>Starting Lineup Card</h2><p>Will switch from projected to official when you send the lineup.</p></div></div>
+      <div class="card"><div class="card-body">
+        <span class="eyebrow">Projected / Awaiting Confirmation</span>
+        <h3>Thursday vs Pirates</h3>
+        <div class="lineup-grid">
+          <div class="lineup-row"><b>1</b><span>Awaiting lineup</span><strong>—</strong></div>
+          <div class="lineup-row"><b>2</b><span>Awaiting lineup</span><strong>—</strong></div>
+          <div class="lineup-row"><b>3</b><span>Awaiting lineup</span><strong>—</strong></div>
+          <div class="lineup-row"><b>4</b><span>Awaiting lineup</span><strong>—</strong></div>
+          <div class="lineup-row"><b>5</b><span>Awaiting lineup</span><strong>—</strong></div>
+          <div class="lineup-row"><b>6</b><span>Awaiting lineup</span><strong>—</strong></div>
+          <div class="lineup-row"><b>7</b><span>Awaiting lineup</span><strong>—</strong></div>
+          <div class="lineup-row"><b>8</b><span>Awaiting lineup</span><strong>—</strong></div>
+          <div class="lineup-row"><b>9</b><span>Awaiting lineup</span><strong>—</strong></div>
+        </div>
+      </div></div>
+    </section>
+
+    <section id="player-trends">
+      <div class="section-head"><div><h2>Player Trends</h2><p>Rank movement and recent-form tracking.</p></div></div>
+      <div class="grid">
+        <article class="card"><div class="card-body"><span class="eyebrow">Trend Arrows</span><h3>Baseline Week</h3><p>All players begin with <span class="trend-flat">—</span>. After the next stat update, players will show <span class="trend-up">↑</span>, <span class="trend-down">↓</span>, or <span class="trend-flat">—</span> based on movement.</p></div></article>
+        <article class="card"><div class="card-body"><span class="eyebrow">Last 3 Games</span><h3>Recent Form</h3><p>Player-by-player last-three-game batting and pitching lines will appear once individual game logs are supplied.</p></div></article>
+      </div>
+    </section>
+
+    <section id="top5">
+      <div class="section-head"><div><h2>Cardinals Top 5</h2><p>Current performance power ranking.</p></div></div>
+      <div class="top5">
+        <div class="top5-row"><div class="top5-rank">1</div><div><strong>Anthony Gonzalas #7</strong><div class="stats-note">.667 AVG • fantasy leader</div></div><span class="trend-flat">—</span></div>
+        <div class="top5-row"><div class="top5-rank">2</div><div><strong>Logan Brent #10</strong><div class="stats-note">.500 AVG • team-high 3 hits</div></div><span class="trend-flat">—</span></div>
+        <div class="top5-row"><div class="top5-rank">3</div><div><strong>Preston Michaletz #13</strong><div class="stats-note">1.000 AVG • day-to-day</div></div><span class="trend-flat">—</span></div>
+        <div class="top5-row"><div class="top5-rank">4</div><div><strong>Adian Scott #11</strong><div class="stats-note">2 RBI • 5 fantasy points</div></div><span class="trend-flat">—</span></div>
+        <div class="top5-row"><div class="top5-rank">5</div><div><strong>Ryleigh Mullins #4</strong><div class="stats-note">3 fantasy points</div></div><span class="trend-flat">—</span></div>
+      </div>
+    </section>
+
+    <section id="matchup-center">
+      <div class="section-head"><div><h2>Matchup Center</h2><p>Next game preview hub.</p></div></div>
+      <div class="matchup-box">
+        <div><span class="eyebrow">Away</span><h3>Cardinals</h3><p>0–4</p></div>
+        <div class="versus">VS</div>
+        <div><span class="eyebrow">Opponent</span><h3>NTNLL Pirates</h3><p>Thu • 5:30 PM</p></div>
+      </div>
+      <div class="grid" style="margin-top:14px">
+        <article class="card"><div class="card-body"><span class="eyebrow">Key</span><h3>Generate More Offense</h3><p>The Cardinals scored a season-high six runs in the latest game and will look to carry more offense into Thursday.</p></div></article>
+        <article class="card"><div class="card-body"><span class="eyebrow">Player to Watch</span><h3>Anthony Gonzalas #7</h3><p>.667 AVG and the current fantasy points leader.</p></div></article>
+        <article class="card"><div class="card-body"><span class="eyebrow">Availability</span><h3>Preston — Day-to-Day</h3><p>Activated from the 15-Day IL but not cleared. Decision expected after Wednesday practice.</p></div></article>
+      </div>
+    </section>
+
+    <section id="season-graphs">
+      <div class="section-head"><div><h2>Season Graphs</h2><p>Runs scored and allowed by game.</p></div></div>
+      <div class="grid">
+        <div class="chart-card"><h3>Runs Scored</h3>
+          <div class="bar-row"><span>Mets</span><div class="bar-track"><div class="bar-fill" style="width:67%"></div></div><b>4</b></div>
+          <div class="bar-row"><span>Brewers</span><div class="bar-track"><div class="bar-fill" style="width:17%"></div></div><b>1</b></div>
+          <div class="bar-row"><span>Rockies</span><div class="bar-track"><div class="bar-fill" style="width:17%"></div></div><b>1</b></div>
+          <div class="bar-row"><span>Dodgers</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><b>6</b></div>
+        </div>
+        <div class="chart-card"><h3>Runs Allowed</h3>
+          <div class="bar-row"><span>Mets</span><div class="bar-track"><div class="bar-fill allowed" style="width:21%"></div></div><b>5</b></div>
+          <div class="bar-row"><span>Brewers</span><div class="bar-track"><div class="bar-fill allowed" style="width:83%"></div></div><b>20</b></div>
+          <div class="bar-row"><span>Rockies</span><div class="bar-track"><div class="bar-fill allowed" style="width:100%"></div></div><b>24</b></div>
+          <div class="bar-row"><span>Dodgers</span><div class="bar-track"><div class="bar-fill allowed" style="width:42%"></div></div><b>10</b></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="transactions">
+      <div class="section-head"><div><h2>Transactions Wire</h2><p>Status changes, IL moves and returns.</p></div></div>
+      <div class="card"><div class="card-body">
+        <div class="transaction"><time>SEP 7</time><div><strong>Preston Michaletz activated from 15-Day IL</strong><br><span class="stats-note">Remains day-to-day and is not cleared to play.</span></div></div>
+        <div class="transaction"><time>SEP 7</time><div><strong>Preston enters return evaluation window</strong><br><span class="stats-note">Wednesday practice will determine whether Thursday is possible.</span></div></div>
+      </div></div>
+    </section>
+
+    <section id="return-timeline">
+      <div class="section-head"><div><h2>Road to Return</h2><p>Preston’s current return timeline.</p></div></div>
+      <div class="timeline">
+        <div class="timeline-item"><time>Previous</time><h3>15-Day IL</h3><p>Sidelined with a strained tricep.</p></div>
+        <div class="timeline-item"><time>Recent</time><h3>Light Baseball Activity</h3><p>Returned to light baseball activity while remaining unavailable for games.</p></div>
+        <div class="timeline-item"><time>Sep 7 • 10:47–10:48 AM</time><h3>Coaching Staff Call</h3><p>Preston told coaches he feels ready. Staff said a decision will follow Wednesday practice.</p></div>
+        <div class="timeline-item"><time>Current</time><h3>Activated • Day-to-Day</h3><p>Off the 15-Day IL, but not cleared to play.</p></div>
+        <div class="timeline-item"><time>Wednesday</time><h3>Evaluation</h3><p>Practice is the next decision point.</p></div>
+        <div class="timeline-item"><time>Thursday / Saturday</time><h3>Possible Return Window</h3><p>Thursday is earliest; Sept. 12 is the next target if more time is needed.</p></div>
+      </div>
+    </section>
+
+    <section id="awards-race">
+      <div class="section-head"><div><h2>Season Awards Race</h2><p>Early-season tracker — not final awards.</p></div></div>
+      <div class="race-grid">
+        <div class="race-card"><span class="eyebrow">MVP Race</span><h3>Anthony Gonzalas</h3><p>Early leader based on overall production and fantasy points.</p></div>
+        <div class="race-card"><span class="eyebrow">Offensive Player</span><h3>Preston / Anthony / Logan</h3><p>Strong early batting numbers.</p></div>
+        <div class="race-card"><span class="eyebrow">Pitcher</span><h3>Anthony Gonzalas</h3><p>Best current listed ERA among pitchers with innings.</p></div>
+        <div class="race-card"><span class="eyebrow">Fantasy MVP</span><h3>Anthony Gonzalas</h3><p>16 fantasy points.</p></div>
+      </div>
+    </section>
+
+    <section id="fantasy-movers">
+      <div class="section-head"><div><h2>Fantasy Movers</h2><p>Rank movement after each stat update.</p></div></div>
+      <div class="card"><div class="card-body">
+        <h3>Baseline Rankings Established</h3>
+        <p>Anthony Gonzalas leads with 16 points, followed by Logan Brent with 11 and Adian Scott with 5. This is the baseline; ↑/↓ movement will appear after the next game/stat update.</p>
+      </div></div>
+    </section>
+
+    <section id="quotes">
+      <div class="section-head"><div><h2>Postgame Quotes</h2><p>Only quotes you actually provide will be published.</p></div></div>
+      <div class="quote-card">
+        <span class="eyebrow">Awaiting Quote</span>
+        <h3>Player / Coach Reaction</h3>
+        <p>Send a real postgame quote and I’ll add the speaker, game, and context here.</p>
+      </div>
+    </section>
+
+    <section id="records">
+      <div class="section-head"><div><h2>Records & Milestones</h2><p>Current season highs from the data we have.</p></div></div>
+      <div class="record-grid">
+        <div class="record-card"><small>Most Team Runs in a Game</small><div class="record-value">6</div><p>vs Laboeuf Dodgers</p></div>
+        <div class="record-card"><small>Most Hits</small><div class="record-value">3</div><p>Logan Brent</p></div>
+        <div class="record-card"><small>Most RBI</small><div class="record-value">2</div><p>Adian Scott / Jaxon Maynard</p></div>
+        <div class="record-card"><small>Most Stolen Bases</small><div class="record-value">4</div><p>Anthony / Preston / Logan</p></div>
+        <div class="record-card"><small>Most Pitching Strikeouts</small><div class="record-value">11</div><p>Ryker Topkino</p></div>
+        <div class="record-card"><small>Best Listed AVG</small><div class="record-value">1.000</div><p>Preston Michaletz</p></div>
+      </div>
+    </section>
+
+    <section id="share">
+      <div class="section-head"><div><h2>Share The Cardinal Report</h2><p>Built for fans and Instagram sharing.</p></div></div>
+      <div class="card"><div class="card-body">
+        <div class="share-row">
+          <button class="share-btn" onclick="copySiteLink()">Copy Site Link</button>
+          <button class="share-btn" onclick="copyHeadline()">Copy Breaking Headline</button>
+        </div>
+        <p class="stats-note" id="shareMessage">Once published, the permanent website URL will stay the same even when the content updates.</p>
+      </div></div>
+    </section>
+
+    
+    <section id="archive">
+      <div class="section-head"><div><h2>Weekly Archive</h2><p>Past Cardinal Report weekly roundups and major updates.</p></div></div>
+      <div class="archive-grid">
+        <div class="archive-item"><span>Breaking • Sep 7</span><h3>Preston Activated, Remains Day-to-Day</h3><p>Off the 15-Day IL, awaiting clearance after Wednesday practice.</p></div>
+        <div class="archive-item"><span>Game Preview</span><h3>Cardinals Set for Thursday Matchup Against NTNLL Pirates</h3><p>Next game: Sept. 10 at 5:30 PM.</p></div>
+        <div class="archive-item"><span>Player Update</span><h3>Preston Opens Season Perfect at the Plate</h3><p>Current listed AVG: 1.000.</p></div>
+        <div class="archive-item"><span>Team Report</span><h3>Cardinals Continue Through Tough Early Stretch</h3><p>The club sits at 0–4 with six games remaining.</p></div>
+      </div>
+    </section>
+
+
+    
+    <section id="data-system">
+      <div class="section-head"><div><h2>Site Update System</h2><p>Built for easier weekly updates.</p></div></div>
+      <div class="data-system-note">Core team information now also lives in <strong>team-data.js</strong>. Going forward, scores, next-game info, availability and other recurring data can be updated without rebuilding every visual section from scratch.</div>
+    </section></main>
+
+  <footer>
+    <strong>The Cardinal Report</strong><br>
+    Unofficial team coverage • Built for the Cardinals fall ball season
+  </footer>
+
+  <div class="profile-modal" id="profileModal" aria-hidden="true">
+    <div class="profile-panel">
+      <div class="profile-head">
+        <div>
+          <h2 id="profileName">Player</h2>
+          <p id="profilePosition"></p>
+        </div>
+        <button class="profile-close" id="profileClose" aria-label="Close profile">×</button>
+      </div>
+      <div class="profile-body">
+
+        
+        <div class="profile-availability" id="profileGameLog">
+          <h3>Game Log</h3>
+          <table class="game-log">
+            <thead><tr><th>Date</th><th>Opponent</th><th>Batting</th><th>Pitching</th></tr></thead>
+            <tbody id="profileGameLogBody"><tr><td colspan="4">Game-by-game stats will populate after individual game logs are provided.</td></tr></tbody>
+          </table>
+        </div>
+
+<div class="profile-availability" id="profileAvailability">
+          <h3>Availability</h3>
+          <div id="profileStatus"></div>
+          <p id="profileStatusNote"></p>
+        </div>
+
+        <div class="profile-group">
+          <h3>Batting</h3>
+          <div class="profile-stats" id="battingStats"></div>
+        </div>
+        <div class="profile-group">
+          <h3>Pitching</h3>
+          <div class="profile-stats" id="pitchingStats"></div>
+        </div>
+        <div class="profile-group">
+          <h3>Fielding</h3>
+          <div class="profile-stats" id="fieldingStats"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<script>
+const playerProfiles = [{"name": "Lincon Toutkalty", "number": "#1", "position": "3B / SS", "batting": {"AVG": ".000", "OBP": ".600", "OPS": ".600", "H": "0", "RBI": "0", "R": "1"}, "pitching": {"IP": "\u2014", "ERA": "\u2014", "WHIP": "\u2014", "K": "\u2014"}, "fielding": {"FPCT": ".600", "E": "2"}, "availability": {"level": "green", "label": "Good to Play", "note": "No current availability restriction listed by The Cardinal Report."}}, {"name": "Parker Arras", "number": "#2", "position": "2B / LF", "batting": {"AVG": ".250", "OBP": ".250", "OPS": ".500", "H": "1", "RBI": "0", "R": "1"}, "pitching": {"IP": "0.0", "ERA": "\u2014", "WHIP": "\u2014", "K": "0"}, "fielding": {"FPCT": "\u2014", "E": "0"}, "availability": {"level": "green", "label": "Good to Play", "note": "No current availability restriction listed by The Cardinal Report."}}, {"name": "Ryleigh Mullins", "number": "#4", "position": "C / 2B", "batting": {"AVG": ".000", "OBP": ".333", "OPS": ".333", "H": "0", "RBI": "0", "R": "1"}, "pitching": {"IP": "\u2014", "ERA": "\u2014", "WHIP": "\u2014", "K": "\u2014"}, "fielding": {"FPCT": "1.000", "E": "0"}, "availability": {"level": "green", "label": "Good to Play", "note": "No current availability restriction listed by The Cardinal Report."}}, {"name": "Arnold Rydzynski", "number": "#5", "position": "SS / 2B / 1B", "batting": {"AVG": ".286", "OBP": ".286", "OPS": ".571", "H": "2", "RBI": "0", "R": "1"}, "pitching": {"IP": "\u2014", "ERA": "\u2014", "WHIP": "\u2014", "K": "\u2014"}, "fielding": {"FPCT": ".500", "E": "1"}, "availability": {"level": "green", "label": "Good to Play", "note": "No current availability restriction listed by The Cardinal Report."}}, {"name": "Mikey Marino", "number": "#6", "position": "RF", "batting": {"AVG": ".250", "OBP": ".400", "OPS": ".650", "H": "1", "RBI": "0", "R": "0"}, "pitching": {"IP": "\u2014", "ERA": "\u2014", "WHIP": "\u2014", "K": "\u2014"}, "fielding": {"FPCT": "\u2014", "E": "0"}, "availability": {"level": "green", "label": "Good to Play", "note": "No current availability restriction listed by The Cardinal Report."}}, {"name": "Anthony Gonzalas", "number": "#7", "position": "C / P", "batting": {"AVG": ".667", "OBP": ".667", "OPS": "1.667", "H": "2", "RBI": "0", "R": "2"}, "pitching": {"IP": "3.0", "ERA": "2.33", "WHIP": ".667", "K": "4"}, "fielding": {"FPCT": "1.000", "E": "0"}, "availability": {"level": "green", "label": "Good to Play", "note": "No current availability restriction listed by The Cardinal Report."}}, {"name": "Elijah Leight", "number": "#8", "position": "LF / RF", "batting": {"AVG": ".000", "OBP": ".375", "OPS": ".375", "H": "0", "RBI": "0", "R": "0"}, "pitching": {"IP": "\u2014", "ERA": "\u2014", "WHIP": "\u2014", "K": "\u2014"}, "fielding": {"FPCT": "1.000", "E": "0"}, "availability": {"level": "green", "label": "Good to Play", "note": "No current availability restriction listed by The Cardinal Report."}}, {"name": "Jaxon Maynard", "number": "#9", "position": "P / 1B / 3B", "batting": {"AVG": ".000", "OBP": ".143", "OPS": ".143", "H": "0", "RBI": "2", "R": "0"}, "pitching": {"IP": "5.0", "ERA": "18.20", "WHIP": "4.000", "K": "7"}, "fielding": {"FPCT": "\u2014", "E": "0"}, "availability": {"level": "green", "label": "Good to Play", "note": "No current availability restriction listed by The Cardinal Report."}}, {"name": "Logan Brent", "number": "#10", "position": "1B / C", "batting": {"AVG": ".500", "OBP": ".571", "OPS": "1.238", "H": "3", "RBI": "1", "R": "2"}, "pitching": {"IP": "\u2014", "ERA": "\u2014", "WHIP": "\u2014", "K": "\u2014"}, "fielding": {"FPCT": ".889", "E": "1"}, "availability": {"level": "green", "label": "Good to Play", "note": "No current availability restriction listed by The Cardinal Report."}}, {"name": "Adian Scott", "number": "#11", "position": "CF", "batting": {"AVG": ".200", "OBP": ".429", "OPS": ".829", "H": "1", "RBI": "2", "R": "1"}, "pitching": {"IP": "\u2014", "ERA": "\u2014", "WHIP": "\u2014", "K": "\u2014"}, "fielding": {"FPCT": "1.000", "E": "0"}, "availability": {"level": "green", "label": "Good to Play", "note": "No current availability restriction listed by The Cardinal Report."}}, {"name": "Ryker Topkino", "number": "#11", "position": "SS / P", "batting": {"AVG": ".250", "OBP": ".667", "OPS": ".917", "H": "1", "RBI": "0", "R": "1"}, "pitching": {"IP": "5.2", "ERA": "27.18", "WHIP": "5.294", "K": "11"}, "fielding": {"FPCT": "1.000", "E": "0"}, "availability": {"level": "green", "label": "Good to Play", "note": "No current availability restriction listed by The Cardinal Report."}}, {"name": "Zeke Dankert", "number": "#12", "position": "LF / 2B", "batting": {"AVG": ".000", "OBP": ".500", "OPS": ".500", "H": "0", "RBI": "0", "R": "0"}, "pitching": {"IP": "\u2014", "ERA": "\u2014", "WHIP": "\u2014", "K": "\u2014"}, "fielding": {"FPCT": ".500", "E": "2"}, "availability": {"level": "green", "label": "Good to Play", "note": "No current availability restriction listed by The Cardinal Report."}}, {"name": "Preston Michaletz", "number": "#13", "position": "P / 1B", "batting": {"AVG": "1.000", "OBP": "1.000", "OPS": "2.000", "H": "1", "RBI": "0", "R": "1"}, "pitching": {"IP": "4.0", "ERA": "18.00", "WHIP": "\u2014", "K": "9", "RA": "8"}, "fielding": {"FPCT": "1.000", "E": "0"}, "availability": {"level": "yellow", "label": "Day-to-Day", "note": "Activated from the 15-Day IL, but not cleared to play yet. Next evaluation: Wednesday practice. Earliest possible return: Thursday."}}, {"name": "Clark Cich", "number": "#14", "position": "3B / C", "batting": {"AVG": ".200", "OBP": ".429", "OPS": ".629", "H": "1", "RBI": "0", "R": "1"}, "pitching": {"IP": "2.0", "ERA": "7.00", "WHIP": "4.000", "K": "0"}, "fielding": {"FPCT": ".923", "E": "1"}, "availability": {"level": "green", "label": "Good to Play", "note": "No current availability restriction listed by The Cardinal Report."}}, {"name": "Mason Dorazio", "number": "#15", "position": "RF", "batting": {"AVG": ".000", "OBP": ".400", "OPS": ".400", "H": "0", "RBI": "0", "R": "0"}, "pitching": {"IP": "\u2014", "ERA": "\u2014", "WHIP": "\u2014", "K": "\u2014"}, "fielding": {"FPCT": "\u2014", "E": "0"}, "availability": {"level": "green", "label": "Good to Play", "note": "No current availability restriction listed by The Cardinal Report."}}, {"name": "Joel Dorazio", "number": "", "position": "RF", "batting": {"AVG": ".000", "OBP": ".400", "OPS": ".400", "H": "0", "RBI": "0", "R": "0"}, "pitching": {"IP": "\u2014", "ERA": "\u2014", "WHIP": "\u2014", "K": "\u2014"}, "fielding": {"FPCT": "\u2014", "E": "0"}, "availability": {"level": "green", "label": "Good to Play", "note": "No current availability restriction listed by The Cardinal Report."}}, {"name": "Nicholas Misoi", "number": "", "position": "LF / 2B", "batting": {"AVG": ".200", "OBP": ".429", "OPS": ".629", "H": "1", "RBI": "0", "R": "0"}, "pitching": {"IP": "\u2014", "ERA": "\u2014", "WHIP": "\u2014", "K": "\u2014"}, "fielding": {"FPCT": "1.000", "E": "0"}, "availability": {"level": "green", "label": "Good to Play", "note": "No current availability restriction listed by The Cardinal Report."}}];
+const modal = document.getElementById("profileModal");
+const closeBtn = document.getElementById("profileClose");
+
+function statHTML(stats) {
+  return Object.entries(stats).map(([label,value]) =>
+    `<div class="profile-stat"><b>${value}</b><span>${label}</span></div>`
+  ).join("");
+}
+
+function openProfile(index) {
+  const p = playerProfiles[index];
+  document.getElementById("profileName").textContent = `${p.name} ${p.number}`.trim();
+  document.getElementById("profilePosition").textContent = p.position;
+  document.getElementById("battingStats").innerHTML = statHTML(p.batting);
+  document.getElementById("pitchingStats").innerHTML = statHTML(p.pitching);
+  document.getElementById("fieldingStats").innerHTML = statHTML(p.fielding);
+  const availability = p.availability || {level:"green",label:"Good to Play",note:""};
+  document.getElementById("profileStatus").innerHTML =
+    `<span class="availability-pill status-${availability.level}"><i class="availability-dot"></i>${availability.label}</span>`;
+  document.getElementById("profileStatusNote").textContent = availability.note;
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden","false");
+}
+
+document.querySelectorAll(".player[data-profile]").forEach(card => {
+  card.addEventListener("click", () => openProfile(Number(card.dataset.profile)));
+  card.addEventListener("keydown", e => {
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openProfile(Number(card.dataset.profile)); }
+  });
+});
+closeBtn.addEventListener("click", () => { modal.classList.remove("open"); modal.setAttribute("aria-hidden","true"); });
+modal.addEventListener("click", e => { if (e.target === modal) closeBtn.click(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeBtn.click(); });
+</script>
+
+
+<script>
+(function(){
+  const target = new Date("2026-09-10T17:30:00-04:00").getTime();
+  function tick(){
+    const diff = target - Date.now();
+    const d = document.getElementById("cdDays");
+    if(!d) return;
+    if(diff <= 0){
+      d.textContent="0";
+      document.getElementById("cdHours").textContent="0";
+      document.getElementById("cdMinutes").textContent="0";
+      document.getElementById("cdSeconds").textContent="0";
+      return;
+    }
+    document.getElementById("cdDays").textContent=Math.floor(diff/86400000);
+    document.getElementById("cdHours").textContent=Math.floor(diff%86400000/3600000);
+    document.getElementById("cdMinutes").textContent=Math.floor(diff%3600000/60000);
+    document.getElementById("cdSeconds").textContent=Math.floor(diff%60000/1000);
+  }
+  tick();
+  setInterval(tick,1000);
+})();
+</script>
+
+
+<script>
+function copySiteLink(){
+  const url = location.href.split("#")[0];
+  navigator.clipboard?.writeText(url);
+  const m = document.getElementById("shareMessage");
+  if(m) m.textContent = "Site link copied.";
+}
+function copyHeadline(){
+  const text = "🚨 BREAKING — THE CARDINAL REPORT: Preston activated from the 15-Day IL and remains DAY-TO-DAY while awaiting clearance after Wednesday practice.";
+  navigator.clipboard?.writeText(text);
+  const m = document.getElementById("shareMessage");
+  if(m) m.textContent = "Breaking headline copied.";
+}
+</script>
+
+</body>
+</html>

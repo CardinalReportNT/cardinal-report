@@ -88,5 +88,23 @@
     {"number": "15", "name": "Mason Dorazio", "positions": "RF"},
     {"number": "", "name": "Joel Dorazio", "positions": "RF"},
     {"number": "", "name": "Nicholas Misoi", "positions": "LF / 2B"}
+  ],  "battingStats": [
+    {"name":"Preston Michaletz","avg":"1.000","hits":1,"rbi":1,"runs":0,"bb":1,"so":0},
+    {"name":"Anthony Gonzalas","avg":".667","hits":2,"rbi":0,"runs":2,"bb":0,"so":0},
+    {"name":"Logan Brent","avg":".500","hits":3,"rbi":1,"runs":2,"bb":1,"so":1},
+    {"name":"Arnold Rydzynski","avg":".286","hits":2,"rbi":0,"runs":1,"bb":0,"so":4},
+    {"name":"Parker Arras","avg":".250","hits":1,"rbi":0,"runs":0,"bb":0,"so":3},
+    {"name":"Ryker Topkino","avg":".250","hits":1,"rbi":0,"runs":1,"bb":4,"so":1},
+    {"name":"Mikey Marino","avg":".250","hits":1,"rbi":0,"runs":0,"bb":1,"so":2},
+    {"name":"Adian Scott","avg":".200","hits":1,"rbi":2,"runs":1,"bb":1,"so":2},
+    {"name":"Clark Cich","avg":".200","hits":1,"rbi":0,"runs":1,"bb":2,"so":2},
+    {"name":"Nicholas Misoi","avg":".200","hits":1,"rbi":0,"runs":0,"bb":1,"so":4},
+    {"name":"Jaxon Maynard","avg":".000","hits":0,"rbi":2,"runs":0,"bb":1,"so":3},
+    {"name":"Ryleigh Mullins","avg":".000","hits":0,"rbi":0,"runs":1,"bb":2,"so":2},
+    {"name":"Elijah Leight","avg":".000","hits":0,"rbi":0,"runs":0,"bb":3,"so":5},
+    {"name":"Lincon Toutkalty","avg":".000","hits":0,"rbi":0,"runs":1,"bb":3,"so":2},
+    {"name":"Zeke Dankert","avg":".000","hits":0,"rbi":0,"runs":0,"bb":2,"so":2},
+    {"name":"Mason Dorazio","avg":".000","hits":0,"rbi":0,"runs":0,"bb":1,"so":3},
+    {"name":"Joel Dorazio","avg":".000","hits":0,"rbi":0,"runs":0,"bb":2,"so":2}
   ]
 }

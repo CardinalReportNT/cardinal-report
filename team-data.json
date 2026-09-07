@@ -125,5 +125,13 @@
       "date": "September 7, 2026",
       "summary": "Preston Michaletz is expected back in the lineup Thursday, playing first base and hitting. He is not currently listed to pitch."
     }
+  ],  "seasonLeaders": [
+    {"label":"Batting AVG","name":"Preston Michaletz","value":"1.000"},
+    {"label":"Hits","name":"Logan Brent","value":"3"},
+    {"label":"RBI","name":"Adian Scott","value":"2"},
+    {"label":"Runs","name":"Anthony Gonzalas","value":"2"},
+    {"label":"Stolen Bases","name":"Anthony Gonzalas","value":"4"},
+    {"label":"Pitching ERA","name":"Anthony Gonzalas","value":"2.33"},
+    {"label":"Strikeouts","name":"Ryker Topkino","value":"11"}
   ]
 }

@@ -106,5 +106,11 @@
     {"name":"Zeke Dankert","avg":".000","hits":0,"rbi":0,"runs":0,"bb":2,"so":2},
     {"name":"Mason Dorazio","avg":".000","hits":0,"rbi":0,"runs":0,"bb":1,"so":3},
     {"name":"Joel Dorazio","avg":".000","hits":0,"rbi":0,"runs":0,"bb":2,"so":2}
+  ],  "pitchingStats": [
+    {"name":"Anthony Gonzalas","ip":"3.0","era":"2.33","so":4,"runs":2},
+    {"name":"Clark Cich","ip":"2.0","era":"7.00","so":0,"runs":2},
+    {"name":"Preston Michaletz","ip":"4.0","era":"18.00","so":9,"runs":8},
+    {"name":"Jaxon Maynard","ip":"5.0","era":"18.20","so":7,"runs":16},
+    {"name":"Ryker Topkino","ip":"5.2","era":"27.18","so":11,"runs":23}
   ]
 }

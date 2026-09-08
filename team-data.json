@@ -155,5 +155,53 @@
     "title": "Community Notes",
     "body": "Kathy's latest Cardinals Report from around the team."
   }
+],"insiders": [
+  ...
+],
+
+"standings": [
+  {
+    "team": "Diamondbacks",
+    "wins": 3,
+    "losses": 0,
+    "ties": 0
+  },
+  {
+    "team": "Pirates",
+    "wins": 2,
+    "losses": 0,
+    "ties": 1
+  },
+  {
+    "team": "Rockies",
+    "wins": 2,
+    "losses": 1,
+    "ties": 1
+  },
+  {
+    "team": "Dodgers",
+    "wins": 2,
+    "losses": 2,
+    "ties": 0
+  },
+  {
+    "team": "Mets",
+    "wins": 1,
+    "losses": 2,
+    "ties": 0
+  },
+  {
+    "team": "Brewers",
+    "wins": 1,
+    "losses": 2,
+    "ties": 0
+  },
+  {
+    "team": "Cardinals",
+    "wins": 0,
+    "losses": 4,
+    "ties": 0
+  }
 ]
+}
 }

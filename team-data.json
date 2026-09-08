@@ -133,5 +133,27 @@
     {"label":"Stolen Bases","name":"Anthony Gonzalas","value":"4"},
     {"label":"Pitching ERA","name":"Anthony Gonzalas","value":"2.33"},
     {"label":"Strikeouts","name":"Ryker Topkino","value":"11"}
-  ]
+  ],"insiders": [
+  {
+    "author": "Preston Michaletz",
+    "role": "Lead Insider",
+    "date": "September 7, 2026",
+    "title": "Cardinals Insider",
+    "body": "More Cardinals coverage is coming soon. Stay tuned to The Cardinal Report for team updates, game coverage, and inside information."
+  },
+  {
+    "author": "Alan",
+    "role": "Insider",
+    "date": "September 7, 2026",
+    "title": "Around the Team",
+    "body": "Alan's inside look at what's happening around the Cardinals."
+  },
+  {
+    "author": "Kathy",
+    "role": "Insider",
+    "date": "September 7, 2026",
+    "title": "Community Notes",
+    "body": "Kathy's latest Cardinals Report from around the team."
+  }
+]
 }
